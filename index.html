@@ -1,0 +1,743 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Keigo Job Hunt</title>
+<meta name="description" content="A practice game for polite-business Japanese vocabulary used in job hunting — kanji, romaji, meanings, example sentences, flashcards and a quiz.">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Shippori+Mincho:wght@500;600;700;800&family=Zen+Kaku+Gothic+New:wght@400;500;700;900&display=swap">
+<style>
+  :root{
+    --paper:#FBF8F2; --surface:#FFFFFF; --surface-2:#F5EFE4;
+    --ink:#1A1714; --ink-soft:#6A5F53; --ink-faint:#9C9081;
+    --line:#E7DFD1; --line-strong:#D8CDB9;
+    --shu:#C4342A; --shu-deep:#A32A22; --shu-wash:#F7E6E2;
+    --ai:#2A4B6E; --ai-wash:#E6ECF2;
+    --good:#2E7D4F; --good-wash:#E6F1EA;
+    --bad:#B0342A;
+    --display:"Shippori Mincho",'Hiragino Mincho ProN','Yu Mincho',serif;
+    --sans:"Zen Kaku Gothic New",'Hiragino Kaku Gothic ProN','Yu Gothic',system-ui,sans-serif;
+    --shadow:0 1px 2px rgba(40,30,20,.05),0 10px 30px -18px rgba(40,30,20,.28);
+    --radius:14px;
+  }
+  :root:not([data-theme="light"]){
+    @media (prefers-color-scheme:dark){
+      --paper:#15120E; --surface:#201B15; --surface-2:#2A241C;
+      --ink:#F3EEE3; --ink-soft:#BDB2A1; --ink-faint:#8A8072;
+      --line:#332C22; --line-strong:#42392C;
+      --shu:#E8705A; --shu-deep:#D3563F; --shu-wash:#3A241E;
+      --ai:#8FB4D8; --ai-wash:#20303F;
+      --good:#6BC195; --good-wash:#1E3128;
+      --bad:#E8796B;
+      --shadow:0 1px 2px rgba(0,0,0,.3),0 12px 34px -18px rgba(0,0,0,.7);
+    }
+  }
+  :root[data-theme="dark"]{
+    --paper:#15120E; --surface:#201B15; --surface-2:#2A241C;
+    --ink:#F3EEE3; --ink-soft:#BDB2A1; --ink-faint:#8A8072;
+    --line:#332C22; --line-strong:#42392C;
+    --shu:#E8705A; --shu-deep:#D3563F; --shu-wash:#3A241E;
+    --ai:#8FB4D8; --ai-wash:#20303F;
+    --good:#6BC195; --good-wash:#1E3128;
+    --bad:#E8796B;
+    --shadow:0 1px 2px rgba(0,0,0,.3),0 12px 34px -18px rgba(0,0,0,.7);
+  }
+
+  *{box-sizing:border-box}
+  body{
+    margin:0; background:var(--paper); color:var(--ink);
+    font-family:var(--sans); line-height:1.6;
+    -webkit-font-smoothing:antialiased;
+  }
+  .wrap{max-width:1040px; margin:0 auto; padding:0 20px 72px}
+
+  /* ---------- Masthead ---------- */
+  header.mast{
+    max-width:1040px; margin:0 auto; padding:34px 20px 22px;
+  }
+  .mast-top{display:flex; align-items:flex-start; justify-content:space-between; gap:20px; flex-wrap:wrap}
+  .brand{display:flex; align-items:center; gap:18px}
+  .seal{
+    flex:none; width:60px; height:60px; border-radius:12px;
+    border:2.5px solid var(--shu); color:var(--shu);
+    display:grid; place-content:center; text-align:center;
+    font-family:var(--display); font-weight:700; line-height:1.05;
+    font-size:19px; letter-spacing:.02em;
+    background:var(--shu-wash); transform:rotate(-4deg);
+    box-shadow:inset 0 0 0 1px var(--shu);
+  }
+  .titles h1{
+    margin:0; font-family:var(--display); font-weight:800;
+    font-size:clamp(26px,4vw,38px); letter-spacing:.01em; line-height:1.05;
+    text-wrap:balance;
+  }
+  .titles .sub{
+    margin:4px 0 0; color:var(--ink-soft); font-size:14px; letter-spacing:.03em;
+  }
+  .titles .kicker{
+    display:inline-block; margin-bottom:6px; font-size:11px; font-weight:700;
+    text-transform:uppercase; letter-spacing:.18em; color:var(--shu);
+  }
+  .mast-controls{display:flex; gap:8px; align-items:center}
+  .toggle{
+    font-family:var(--sans); font-size:12.5px; font-weight:700; cursor:pointer;
+    border:1px solid var(--line-strong); background:var(--surface); color:var(--ink-soft);
+    padding:8px 12px; border-radius:999px; display:inline-flex; align-items:center; gap:7px;
+    transition:.15s;
+  }
+  .toggle:hover{border-color:var(--shu); color:var(--ink)}
+  .toggle[aria-pressed="true"]{background:var(--ink); color:var(--paper); border-color:var(--ink)}
+  .toggle .dot{width:7px;height:7px;border-radius:50%;background:currentColor;opacity:.55}
+
+  .progress-line{
+    margin-top:20px; height:6px; border-radius:999px; background:var(--surface-2);
+    overflow:hidden; border:1px solid var(--line);
+  }
+  .progress-line>span{display:block; height:100%; width:0; background:linear-gradient(90deg,var(--shu),var(--shu-deep)); transition:width .5s cubic-bezier(.2,.8,.2,1)}
+  .progress-cap{display:flex; justify-content:space-between; margin-top:7px; font-size:11.5px; color:var(--ink-faint); letter-spacing:.04em}
+
+  /* ---------- Tabs ---------- */
+  nav.tabs{
+    position:sticky; top:0; z-index:20; background:color-mix(in srgb,var(--paper) 88%,transparent);
+    backdrop-filter:blur(8px); border-bottom:1px solid var(--line);
+    margin-top:22px;
+  }
+  .tabs-inner{max-width:1040px; margin:0 auto; padding:0 20px; display:flex; gap:2px; overflow-x:auto}
+  .tab{
+    appearance:none; border:0; background:none; cursor:pointer;
+    font-family:var(--sans); font-size:14px; font-weight:700; color:var(--ink-faint);
+    padding:15px 16px 13px; border-bottom:2.5px solid transparent; white-space:nowrap;
+    display:flex; align-items:center; gap:8px; transition:.15s;
+  }
+  .tab .jp{font-family:var(--display); font-weight:600; font-size:13px; opacity:.7}
+  .tab:hover{color:var(--ink)}
+  .tab[aria-selected="true"]{color:var(--ink); border-color:var(--shu)}
+  .tab[aria-selected="true"] .jp{color:var(--shu); opacity:1}
+
+  .panel{padding-top:28px}
+  .panel[hidden]{display:none}
+  .panel-head{margin-bottom:20px}
+  .panel-head h2{margin:0; font-family:var(--display); font-weight:700; font-size:22px}
+  .panel-head p{margin:5px 0 0; color:var(--ink-soft); font-size:14px; max-width:62ch}
+
+  /* ---------- Search ---------- */
+  .searchbar{display:flex; align-items:center; gap:10px; margin-bottom:22px}
+  .searchbar input{
+    flex:1; font-family:var(--sans); font-size:15px; color:var(--ink);
+    background:var(--surface); border:1px solid var(--line-strong); border-radius:11px;
+    padding:11px 14px; outline:none; transition:.15s;
+  }
+  .searchbar input:focus{border-color:var(--shu); box-shadow:0 0 0 3px var(--shu-wash)}
+  .searchbar input::placeholder{color:var(--ink-faint)}
+  .count-chip{font-size:12px; font-weight:700; color:var(--ink-soft); background:var(--surface-2); padding:8px 12px; border-radius:999px; white-space:nowrap}
+
+  /* ---------- Vocab grid ---------- */
+  .grid{display:grid; grid-template-columns:repeat(auto-fill,minmax(300px,1fr)); gap:16px}
+  .vcard{
+    background:var(--surface); border:1px solid var(--line); border-radius:var(--radius);
+    padding:20px 20px 18px; box-shadow:var(--shadow); display:flex; flex-direction:column; gap:12px;
+    position:relative;
+  }
+  .vcard .idx{
+    position:absolute; top:14px; right:16px; font-family:var(--display); font-weight:700;
+    font-size:13px; color:var(--ink-faint); letter-spacing:.05em;
+  }
+  .vcard-top{display:flex; align-items:baseline; gap:12px; flex-wrap:wrap}
+  .kanji{font-family:var(--display); font-weight:700; font-size:34px; line-height:1.1; letter-spacing:.01em}
+  .kana{font-family:var(--display); font-size:15px; color:var(--ink-soft)}
+  .romaji{font-size:14px; color:var(--ai); font-weight:700; letter-spacing:.02em}
+  .en{font-size:15.5px; font-weight:500}
+  .en .pos{font-size:11px; text-transform:uppercase; letter-spacing:.12em; color:var(--ink-faint); font-weight:700; margin-right:7px}
+  .note{
+    font-size:12.5px; color:var(--ink-soft); background:var(--shu-wash);
+    border-left:3px solid var(--shu); padding:7px 11px; border-radius:0 8px 8px 0;
+  }
+  .note b{color:var(--shu-deep); font-weight:700}
+  .example{border-top:1px dashed var(--line-strong); padding-top:12px; margin-top:2px}
+  .example .ex-jp{font-family:var(--display); font-size:17px; line-height:1.5}
+  .example .ex-ro{font-size:13px; color:var(--ai); margin-top:4px}
+  .example .ex-en{font-size:13.5px; color:var(--ink-soft); margin-top:3px}
+  .example .lbl{font-size:10px; font-weight:700; text-transform:uppercase; letter-spacing:.16em; color:var(--ink-faint); margin-bottom:5px}
+
+  .speak{
+    appearance:none; border:1px solid var(--line-strong); background:var(--surface); color:var(--ink-soft);
+    width:30px; height:30px; border-radius:8px; cursor:pointer; flex:none;
+    display:inline-grid; place-content:center; transition:.15s; vertical-align:middle;
+  }
+  .speak:hover{border-color:var(--ai); color:var(--ai); background:var(--ai-wash)}
+  .speak svg{width:15px;height:15px;display:block}
+  .speak.playing{border-color:var(--ai); color:var(--ai); background:var(--ai-wash)}
+
+  /* hide romaji when toggled off */
+  body.no-romaji .romaji,
+  body.no-romaji .ex-ro{display:none}
+
+  /* ---------- Flashcards ---------- */
+  .fc-stage{max-width:520px; margin:0 auto}
+  .fc-card{
+    perspective:1600px; height:340px; cursor:pointer; margin-bottom:20px;
+  }
+  .fc-inner{position:relative; width:100%; height:100%; transition:transform .5s cubic-bezier(.4,.15,.2,1); transform-style:preserve-3d}
+  .fc-card.flipped .fc-inner{transform:rotateY(180deg)}
+  .fc-face{
+    position:absolute; inset:0; backface-visibility:hidden; -webkit-backface-visibility:hidden;
+    background:var(--surface); border:1px solid var(--line); border-radius:20px; box-shadow:var(--shadow);
+    display:flex; flex-direction:column; align-items:center; justify-content:center; gap:14px; padding:30px; text-align:center;
+  }
+  .fc-face .face-tag{position:absolute; top:16px; left:20px; font-size:10px; font-weight:700; text-transform:uppercase; letter-spacing:.16em; color:var(--ink-faint)}
+  .fc-front .kanji{font-size:64px}
+  .fc-front .kana{font-size:19px}
+  .fc-hint{position:absolute; bottom:16px; font-size:12px; color:var(--ink-faint); letter-spacing:.03em}
+  .fc-back{transform:rotateY(180deg); background:var(--surface-2)}
+  .fc-back .en{font-size:24px; font-weight:700; font-family:var(--display)}
+  .fc-back .romaji{font-size:17px}
+  .fc-back .ex-jp{font-family:var(--display); font-size:16px; line-height:1.5; max-width:38ch}
+  .fc-back .ex-en{font-size:13px; color:var(--ink-soft); max-width:40ch}
+  .fc-controls{display:flex; align-items:center; justify-content:center; gap:10px}
+  .btn{
+    appearance:none; font-family:var(--sans); font-weight:700; font-size:14px; cursor:pointer;
+    border:1px solid var(--line-strong); background:var(--surface); color:var(--ink);
+    padding:11px 18px; border-radius:11px; transition:.15s; display:inline-flex; align-items:center; gap:8px;
+  }
+  .btn:hover{border-color:var(--shu); background:var(--surface-2)}
+  .btn:disabled{opacity:.4; cursor:not-allowed}
+  .btn.primary{background:var(--ink); color:var(--paper); border-color:var(--ink)}
+  .btn.primary:hover{background:var(--shu); border-color:var(--shu)}
+  .btn.ghost{border-color:transparent; background:transparent; color:var(--ink-soft)}
+  .btn.ghost:hover{background:var(--surface-2); color:var(--ink)}
+  .fc-counter{min-width:74px; text-align:center; font-weight:700; font-size:14px; color:var(--ink-soft); font-variant-numeric:tabular-nums}
+
+  /* ---------- Quiz ---------- */
+  .quiz-wrap{max-width:600px; margin:0 auto}
+  .quiz-meta{display:flex; justify-content:space-between; align-items:center; margin-bottom:18px; gap:12px}
+  .score-badges{display:flex; gap:10px}
+  .badge{
+    display:flex; flex-direction:column; align-items:center; min-width:62px;
+    background:var(--surface); border:1px solid var(--line); border-radius:11px; padding:8px 12px;
+  }
+  .badge .n{font-family:var(--display); font-weight:700; font-size:22px; line-height:1; font-variant-numeric:tabular-nums}
+  .badge .l{font-size:9.5px; text-transform:uppercase; letter-spacing:.13em; color:var(--ink-faint); font-weight:700; margin-top:4px}
+  .badge.streak .n{color:var(--shu)}
+  .quiz-q{
+    background:var(--surface); border:1px solid var(--line); border-radius:18px; box-shadow:var(--shadow);
+    padding:30px 26px; text-align:center; margin-bottom:16px;
+  }
+  .quiz-q .qlabel{font-size:11px; font-weight:700; text-transform:uppercase; letter-spacing:.15em; color:var(--ink-faint); margin-bottom:14px}
+  .quiz-q .kanji{font-size:52px}
+  .quiz-q .kana{font-size:17px; margin-top:4px}
+  .quiz-q .romaji{font-size:15px; margin-top:6px}
+  .quiz-q .prompt-en{font-family:var(--display); font-weight:700; font-size:30px; line-height:1.2}
+  .options{display:grid; gap:10px}
+  .opt{
+    appearance:none; text-align:left; font-family:var(--sans); font-size:15.5px; cursor:pointer;
+    border:1px solid var(--line-strong); background:var(--surface); color:var(--ink);
+    padding:15px 17px; border-radius:12px; transition:.13s; display:flex; align-items:center; gap:13px;
+  }
+  .opt .key{
+    flex:none; width:26px; height:26px; border-radius:7px; background:var(--surface-2); color:var(--ink-soft);
+    display:grid; place-content:center; font-weight:700; font-size:13px; border:1px solid var(--line);
+  }
+  .opt .opt-jp{font-family:var(--display); font-weight:600}
+  .opt:not(:disabled):hover{border-color:var(--shu); background:var(--surface-2)}
+  .opt.correct{border-color:var(--good); background:var(--good-wash)}
+  .opt.correct .key{background:var(--good); color:#fff; border-color:var(--good)}
+  .opt.wrong{border-color:var(--bad); background:color-mix(in srgb,var(--bad) 9%,var(--surface))}
+  .opt.wrong .key{background:var(--bad); color:#fff; border-color:var(--bad)}
+  .opt:disabled{cursor:default}
+  .opt.dim{opacity:.5}
+
+  .feedback{
+    margin-top:16px; border-radius:14px; padding:16px 18px; border:1px solid var(--line);
+    background:var(--surface); display:none; align-items:flex-start; gap:14px;
+  }
+  .feedback.show{display:flex; animation:rise .35s ease}
+  @keyframes rise{from{opacity:0;transform:translateY(8px)}to{opacity:1;transform:none}}
+  .stamp{
+    flex:none; width:52px; height:52px; border-radius:50%; display:grid; place-content:center;
+    font-family:var(--display); font-size:30px; font-weight:700; border:3px solid; transform:rotate(-8deg);
+  }
+  .stamp.ok{color:var(--good); border-color:var(--good); background:var(--good-wash)}
+  .stamp.no{color:var(--bad); border-color:var(--bad); background:color-mix(in srgb,var(--bad) 10%,transparent)}
+  .feedback .fb-body{flex:1}
+  .feedback .fb-title{font-weight:700; font-size:15px; margin-bottom:3px}
+  .feedback .ex-jp{font-family:var(--display); font-size:16px; margin-top:6px}
+  .feedback .ex-ro{font-size:12.5px; color:var(--ai)}
+  .feedback .ex-en{font-size:13px; color:var(--ink-soft)}
+  .quiz-actions{display:flex; justify-content:flex-end; margin-top:16px}
+
+  /* Results */
+  .results{text-align:center; max-width:460px; margin:10px auto; background:var(--surface); border:1px solid var(--line); border-radius:20px; box-shadow:var(--shadow); padding:38px 30px}
+  .results .big-seal{
+    width:104px; height:104px; margin:0 auto 18px; border-radius:50%; border:3px solid var(--shu); color:var(--shu);
+    background:var(--shu-wash); display:grid; place-content:center; font-family:var(--display); font-weight:700; font-size:20px;
+    line-height:1.1; transform:rotate(-6deg); text-align:center;
+  }
+  .results h3{font-family:var(--display); font-size:26px; margin:0 0 6px}
+  .results .r-score{font-size:44px; font-weight:800; font-family:var(--display); color:var(--shu); font-variant-numeric:tabular-nums}
+  .results p{color:var(--ink-soft); margin:6px 0 22px}
+
+  /* ---------- Phrases ---------- */
+  .phrase-list{display:flex; flex-direction:column; gap:16px}
+  .pcard{
+    background:var(--surface); border:1px solid var(--line); border-radius:var(--radius); box-shadow:var(--shadow);
+    padding:22px 24px; display:grid; grid-template-columns:auto 1fr; gap:6px 20px; align-items:start;
+  }
+  .pcard .pnum{
+    grid-row:1/span 3; font-family:var(--display); font-weight:700; font-size:15px; color:var(--paper);
+    background:var(--ai); width:34px; height:34px; border-radius:9px; display:grid; place-content:center;
+  }
+  .pcard .pattern{font-family:var(--display); font-weight:700; font-size:22px; line-height:1.35}
+  .pcard .p-ro{font-size:13.5px; color:var(--ai); font-weight:700}
+  .pcard .p-use{font-size:14px; color:var(--ink-soft); margin-top:2px; grid-column:2}
+  .pcard .p-ex{grid-column:2; margin-top:10px; border-top:1px dashed var(--line-strong); padding-top:11px}
+  .pcard .p-ex .ex-jp{font-family:var(--display); font-size:16.5px}
+  .pcard .p-ex .ex-ro{font-size:12.5px; color:var(--ai); margin-top:3px}
+  .pcard .p-ex .ex-en{font-size:13px; color:var(--ink-soft); margin-top:2px}
+
+  footer.foot{max-width:1040px; margin:40px auto 0; padding:22px 20px 0; border-top:1px solid var(--line); color:var(--ink-faint); font-size:12.5px; display:flex; justify-content:space-between; gap:12px; flex-wrap:wrap}
+
+  :focus-visible{outline:2.5px solid var(--shu); outline-offset:2px; border-radius:4px}
+  @media (prefers-reduced-motion:reduce){
+    *{animation-duration:.001ms!important; transition-duration:.001ms!important}
+  }
+  @media (max-width:560px){
+    .kanji{font-size:30px}
+    .fc-front .kanji{font-size:52px}
+    .quiz-q .kanji{font-size:44px}
+    .pcard{grid-template-columns:1fr}
+    .pcard .pnum{grid-row:auto}
+    .pcard .p-use,.pcard .p-ex{grid-column:1}
+  }
+</style>
+
+</head>
+<body>
+<header class="mast">
+  <div class="mast-top">
+    <div class="brand">
+      <div class="seal" aria-hidden="true">就活<br>敬語</div>
+      <div class="titles">
+        <span class="kicker">Polite-Business Japanese · 就職活動</span>
+        <h1>Keigo for the Job Hunt</h1>
+        <p class="sub">Vocabulary &amp; set phrases for applications, exams and interviews — with kanji, romaji, meaning and example sentences.</p>
+      </div>
+    </div>
+    <div class="mast-controls">
+      <button class="toggle" id="romajiToggle" aria-pressed="true" title="Show or hide romaji everywhere">
+        <span class="dot"></span>Romaji
+      </button>
+      <button class="toggle" id="themeToggle" aria-pressed="false" title="Switch light / dark">
+        <span class="dot"></span><span id="themeLabel">Light</span>
+      </button>
+    </div>
+  </div>
+</header>
+
+<nav class="tabs" aria-label="Study modes">
+  <div class="tabs-inner" role="tablist">
+    <button class="tab" role="tab" id="tab-learn"   aria-selected="true"  aria-controls="panel-learn"><span class="jp">語彙</span>Learn</button>
+    <button class="tab" role="tab" id="tab-cards"   aria-selected="false" aria-controls="panel-cards"><span class="jp">暗記</span>Flashcards</button>
+    <button class="tab" role="tab" id="tab-quiz"    aria-selected="false" aria-controls="panel-quiz"><span class="jp">試験</span>Quiz</button>
+    <button class="tab" role="tab" id="tab-phrases" aria-selected="false" aria-controls="panel-phrases"><span class="jp">表現</span>Phrases</button>
+  </div>
+</nav>
+
+<main class="wrap">
+  <!-- LEARN -->
+  <section class="panel" id="panel-learn" role="tabpanel" aria-labelledby="tab-learn">
+    <div class="panel-head">
+      <h2>Vocabulary Deck</h2>
+      <p>Nineteen words you'll meet while job hunting in Japan. Tap the speaker to hear the natural pronunciation. Notes flag the corrected reading where the study list had a typo.</p>
+    </div>
+    <div class="searchbar">
+      <input type="search" id="search" placeholder="Search kanji, romaji or meaning…" aria-label="Search vocabulary">
+      <span class="count-chip" id="countChip"></span>
+    </div>
+    <div class="grid" id="vocabGrid"></div>
+  </section>
+
+  <!-- FLASHCARDS -->
+  <section class="panel" id="panel-cards" role="tabpanel" aria-labelledby="tab-cards" hidden>
+    <div class="panel-head">
+      <h2>Flashcards</h2>
+      <p>See the Japanese, recall the meaning, then flip to check. Use the arrow keys, or space to flip.</p>
+    </div>
+    <div class="fc-stage">
+      <div class="fc-card" id="fcCard" tabindex="0" role="button" aria-label="Flashcard — activate to flip">
+        <div class="fc-inner">
+          <div class="fc-face fc-front">
+            <span class="face-tag">Japanese</span>
+            <div class="kanji" id="fcKanji"></div>
+            <div class="kana" id="fcKana"></div>
+            <button class="speak" id="fcSpeak" aria-label="Play pronunciation"></button>
+            <span class="fc-hint">tap to flip ↺</span>
+          </div>
+          <div class="fc-face fc-back">
+            <span class="face-tag">Meaning</span>
+            <div class="en" id="fcEn"></div>
+            <div class="romaji" id="fcRomaji"></div>
+            <div class="ex-jp" id="fcExJp"></div>
+            <div class="ex-en" id="fcExEn"></div>
+          </div>
+        </div>
+      </div>
+      <div class="fc-controls">
+        <button class="btn ghost" id="fcPrev" aria-label="Previous card">← Prev</button>
+        <span class="fc-counter" id="fcCounter">1 / 19</span>
+        <button class="btn ghost" id="fcNext" aria-label="Next card">Next →</button>
+      </div>
+      <div class="fc-controls" style="margin-top:12px">
+        <button class="btn primary" id="fcFlip">Flip card</button>
+        <button class="btn" id="fcShuffle">⇄ Shuffle</button>
+      </div>
+    </div>
+  </section>
+
+  <!-- QUIZ -->
+  <section class="panel" id="panel-quiz" role="tabpanel" aria-labelledby="tab-quiz" hidden>
+    <div class="panel-head">
+      <h2>Quiz</h2>
+      <p>Match each word to its meaning. A red seal marks your answer — read the example sentence before moving on.</p>
+    </div>
+    <div class="quiz-wrap" id="quizWrap"></div>
+  </section>
+
+  <!-- PHRASES -->
+  <section class="panel" id="panel-phrases" role="tabpanel" aria-labelledby="tab-phrases" hidden>
+    <div class="panel-head">
+      <h2>Set Phrases</h2>
+      <p>Four polite sentence patterns for softening requests, raising points and giving instructions — the connective tissue of business Japanese.</p>
+    </div>
+    <div class="phrase-list" id="phraseList"></div>
+  </section>
+
+  <footer class="foot">
+    <span>就職活動の敬語 · a practice deck for polite-business Japanese</span>
+    <span id="ttsNote"></span>
+  </footer>
+</main>
+
+<script>
+/* ---------------- Data ---------------- */
+const VOCAB = [
+  {k:"参加する",kana:"さんかする",romaji:"sanka suru",pos:"verb",en:"to participate, to take part",
+   ex:{jp:"会議に参加させていただきます。",ro:"Kaigi ni sanka sasete itadakimasu.",en:"I would like to participate in the meeting."}},
+  {k:"伺う",kana:"うかがう",romaji:"ukagau",pos:"verb",en:"to ask, to inquire (humble)",
+   note:"Humble form of <b>聞く / 尋ねる</b>. Also means “to visit” or “to hear.”",
+   ex:{jp:"一つお伺いしてもよろしいでしょうか。",ro:"Hitotsu o-ukagai shite mo yoroshii deshō ka.",en:"May I ask you one question?"}},
+  {k:"知る",kana:"しる",romaji:"shiru",pos:"verb",en:"to get to know, to find out",
+   ex:{jp:"御社について詳しく知りたいと思っております。",ro:"Onsha ni tsuite kuwashiku shiritai to omotte orimasu.",en:"I would like to learn more about your company."}},
+  {k:"なるべく",kana:"なるべく",romaji:"narubeku",pos:"adverb",en:"as much as possible, if possible",
+   ex:{jp:"なるべく早くご連絡いたします。",ro:"Narubeku hayaku go-renraku itashimasu.",en:"I will contact you as soon as possible."}},
+  {k:"応募する",kana:"おうぼする",romaji:"ōbo suru",pos:"verb",en:"to apply (for a job)",
+   note:"Reading corrected: the list had <b>oubu</b> → it is <b>ōbo (おうぼ)</b>.",
+   ex:{jp:"この求人に応募したいのですが。",ro:"Kono kyūjin ni ōbo shitai no desu ga.",en:"I would like to apply for this position…"}},
+  {k:"提出する",kana:"ていしゅつする",romaji:"teishutsu suru",pos:"verb",en:"to submit, to hand in",
+   ex:{jp:"書類を明日までに提出いたします。",ro:"Shorui o ashita made ni teishutsu itashimasu.",en:"I will submit the documents by tomorrow."}},
+  {k:"通る",kana:"とおる",romaji:"tōru",pos:"verb",en:"to pass (an exam / interview)",
+   note:"Reading corrected: <b>touru</b> → <b>tōru (とおる)</b>.",
+   ex:{jp:"おかげさまで面接に通りました。",ro:"Okagesama de mensetsu ni tōrimashita.",en:"Thanks to you, I passed the interview."}},
+  {k:"面接",kana:"めんせつ",romaji:"mensetsu",pos:"noun",en:"interview",
+   note:"Reading corrected: <b>meisitsu</b> → <b>mensetsu (めんせつ)</b>.",
+   ex:{jp:"明日、面接がございます。",ro:"Ashita, mensetsu ga gozaimasu.",en:"I have an interview tomorrow."}},
+  {k:"落ちる",kana:"おちる",romaji:"ochiru",pos:"verb",en:"to fail, to not be accepted; to fall",
+   note:"In job hunting this means <b>to fail / be rejected</b> (opposite of 通る).",
+   ex:{jp:"残念ながら試験に落ちてしまいました。",ro:"Zannen nagara shiken ni ochite shimaimashita.",en:"Unfortunately, I failed the exam."}},
+  {k:"性格",kana:"せいかく",romaji:"seikaku",pos:"noun",en:"character, personality",
+   ex:{jp:"自分の性格について説明させていただきます。",ro:"Jibun no seikaku ni tsuite setsumei sasete itadakimasu.",en:"Allow me to describe my personality."}},
+  {k:"本番",kana:"ほんばん",romaji:"honban",pos:"noun",en:"the real thing, the actual event",
+   note:"The word meaning “real / for real” is <b>honban (本番)</b> — not <em>konban</em> (今晩, “tonight”).",
+   ex:{jp:"本番では落ち着いて話します。",ro:"Honban de wa ochitsuite hanashimasu.",en:"When it counts, I will speak calmly."}},
+  {k:"就職試験",kana:"しゅうしょくしけん",romaji:"shūshoku shiken",pos:"noun",en:"employment (job) exam",
+   note:"Reading corrected: <b>shuushaku</b> → <b>shūshoku (しゅうしょく)</b>.",
+   ex:{jp:"来週、就職試験を受けます。",ro:"Raishū, shūshoku shiken o ukemasu.",en:"I will take the employment exam next week."}},
+  {k:"記入",kana:"きにゅう",romaji:"kinyū",pos:"noun",en:"filling in, entry (of a form)",
+   ex:{jp:"こちらにお名前をご記入ください。",ro:"Kochira ni o-namae o go-kinyū kudasai.",en:"Please fill in your name here."}},
+  {k:"応募書類",kana:"おうぼしょるい",romaji:"ōbo shorui",pos:"noun",en:"application documents",
+   note:"Reading corrected: <b>oubu shurui</b> → <b>ōbo shorui (おうぼしょるい)</b>.",
+   ex:{jp:"応募書類を郵送させていただきました。",ro:"Ōbo shorui o yūsō sasete itadakimashita.",en:"I have sent the application documents by mail."}},
+  {k:"履修する",kana:"りしゅうする",romaji:"rishū suru",pos:"verb",en:"to take (a course), to enroll in",
+   ex:{jp:"経済学の授業を履修しております。",ro:"Keizaigaku no jugyō o rishū shite orimasu.",en:"I am taking a course in economics."}},
+  {k:"確認",kana:"かくにん",romaji:"kakunin",pos:"noun",en:"confirmation, checking",
+   ex:{jp:"ご確認いただけますでしょうか。",ro:"Go-kakunin itadakemasu deshō ka.",en:"Could you please confirm?"}},
+  {k:"職歴",kana:"しょくれき",romaji:"shokureki",pos:"noun",en:"work history, employment record",
+   ex:{jp:"職歴をこちらにご記入ください。",ro:"Shokureki o kochira ni go-kinyū kudasai.",en:"Please write your work history here."}},
+  {k:"支店",kana:"してん",romaji:"shiten",pos:"noun",en:"branch (office)",
+   note:"<b>支店</b> is a company <b>branch office</b>.",
+   ex:{jp:"大阪支店に勤務しております。",ro:"Ōsaka shiten ni kinmu shite orimasu.",en:"I work at the Osaka branch."}},
+  {k:"番号",kana:"ばんごう",romaji:"bangō",pos:"noun",en:"number (e.g. phone number)",
+   note:"<b>番号</b> = number; a phone number is <b>電話番号 (denwa bangō)</b>.",
+   ex:{jp:"お電話番号を教えていただけますか。",ro:"O-denwa bangō o oshiete itadakemasu ka.",en:"Could you tell me your phone number?"}}
+];
+
+const PHRASES = [
+  {pattern:"ちょっと〜んですが、〜",romaji:"chotto ~n desu ga, ~",
+   use:"A soft, indirect way to open a request or a piece of bad news — literally “it's just a bit…” — to avoid sounding blunt.",
+   ex:{jp:"ちょっとお願いがあるんですが、今よろしいでしょうか。",ro:"Chotto o-negai ga aru n desu ga, ima yoroshii deshō ka.",en:"Um, I have a small favor to ask — is now a good time?"}},
+  {pattern:"〜とおっしゃいましたが、〜が",romaji:"~to osshaimashita ga, ~ga",
+   use:"“You said ~, but ~.” Uses the honorific おっしゃる (to say) to politely point out a discrepancy without contradicting directly.",
+   ex:{jp:"先ほど水曜日とおっしゃいましたが、木曜日ではございませんか。",ro:"Saki hodo suiyōbi to osshaimashita ga, mokuyōbi de wa gozaimasen ka.",en:"You said Wednesday earlier, but isn't it Thursday?"}},
+  {pattern:"〜からといって、〜",romaji:"~kara to itte, ~",
+   use:"“Just because ~, it doesn't (necessarily) mean ~.” Concedes a point, then pushes back on the conclusion.",
+   ex:{jp:"新人だからといって、油断はできません。",ro:"Shinjin da kara to itte, yudan wa dekimasen.",en:"Just because I'm new doesn't mean I can let my guard down."}},
+  {pattern:"よく〜ておいてください",romaji:"yoku ~te oite kudasai",
+   use:"“Please make sure to ~ (thoroughly, in advance).” ~ておく expresses preparation done ahead of time.",
+   ex:{jp:"資料をよく読んでおいてください。",ro:"Shiryō o yoku yonde oite kudasai.",en:"Please read the materials over carefully beforehand."}}
+];
+
+/* ---------------- Helpers ---------------- */
+const $ = (s,r=document)=>r.querySelector(s);
+const $$ = (s,r=document)=>[...r.querySelectorAll(s)];
+const shuffle = a => { a=[...a]; for(let i=a.length-1;i>0;i--){const j=Math.floor(Math.random()*(i+1));[a[i],a[j]]=[a[j],a[i]];} return a; };
+
+const SPK_ICON = '<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M11 5 6 9H2v6h4l5 4z"/><path d="M15.5 8.5a5 5 0 0 1 0 7"/><path d="M18.5 5.5a9 9 0 0 1 0 13"/></svg>';
+
+/* Text-to-speech (browser SpeechSynthesis, ja-JP) */
+const TTS = {
+  ok: 'speechSynthesis' in window,
+  voice: null,
+  init(){
+    if(!this.ok) return;
+    const pick = ()=>{ this.voice = speechSynthesis.getVoices().find(v=>/ja(-|_)?JP/i.test(v.lang)||/Japanese/i.test(v.name)) || null; };
+    pick(); speechSynthesis.onvoiceschanged = pick;
+  },
+  say(text, btn){
+    if(!this.ok) return;
+    speechSynthesis.cancel();
+    const u = new SpeechSynthesisUtterance(text);
+    u.lang='ja-JP'; u.rate=.9; if(this.voice) u.voice=this.voice;
+    if(btn){ btn.classList.add('playing'); u.onend=u.onerror=()=>btn.classList.remove('playing'); }
+    speechSynthesis.speak(u);
+  }
+};
+TTS.init();
+$('#ttsNote').textContent = TTS.ok ? '🔊 audio uses your browser’s Japanese voice' : '';
+
+function speakBtn(text){
+  const b=document.createElement('button');
+  b.className='speak'; b.type='button'; b.innerHTML=SPK_ICON;
+  b.setAttribute('aria-label','Play pronunciation');
+  b.addEventListener('click',e=>{e.stopPropagation(); TTS.say(text,b);});
+  return b;
+}
+
+/* ---------------- Learn panel ---------------- */
+const grid = $('#vocabGrid');
+function renderVocab(filter=''){
+  const f = filter.trim().toLowerCase();
+  grid.innerHTML='';
+  let n=0;
+  VOCAB.forEach((w,i)=>{
+    const hay = (w.k+w.kana+w.romaji+w.en).toLowerCase();
+    if(f && !hay.includes(f)) return;
+    n++;
+    const c=document.createElement('article');
+    c.className='vcard';
+    c.innerHTML = `
+      <span class="idx">${String(i+1).padStart(2,'0')}</span>
+      <div class="vcard-top">
+        <span class="kanji">${w.k}</span>
+        <span class="kana">${w.kana}</span>
+      </div>
+      <div class="romaji">${w.romaji}</div>
+      <div class="en"><span class="pos">${w.pos}</span>${w.en}</div>
+      ${w.note?`<div class="note">${w.note}</div>`:''}
+      <div class="example">
+        <div class="lbl">Example · polite</div>
+        <div class="ex-jp"></div>
+        <div class="ex-ro">${w.ex.ro}</div>
+        <div class="ex-en">${w.ex.en}</div>
+      </div>`;
+    const exjp=$('.ex-jp',c);
+    exjp.textContent=w.ex.jp+' ';
+    exjp.appendChild(speakBtn(w.ex.jp));
+    // speaker next to headword
+    $('.vcard-top',c).appendChild(speakBtn(w.k));
+    grid.appendChild(c);
+  });
+  $('#countChip').textContent = n===VOCAB.length ? `${VOCAB.length} words` : `${n} of ${VOCAB.length}`;
+}
+renderVocab();
+$('#search').addEventListener('input',e=>renderVocab(e.target.value));
+
+/* ---------------- Flashcards ---------------- */
+let deck = VOCAB.map((_,i)=>i), fcPos=0;
+const fcCard=$('#fcCard');
+function fcRender(){
+  const w=VOCAB[deck[fcPos]];
+  fcCard.classList.remove('flipped');
+  $('#fcKanji').textContent=w.k;
+  $('#fcKana').textContent=w.kana;
+  $('#fcEn').textContent=w.en;
+  $('#fcRomaji').textContent=w.romaji;
+  $('#fcExJp').textContent=w.ex.jp;
+  $('#fcExEn').textContent=w.ex.en;
+  $('#fcCounter').textContent=`${fcPos+1} / ${deck.length}`;
+  const s=$('#fcSpeak'); s.innerHTML=SPK_ICON;
+  s.onclick=e=>{e.stopPropagation(); TTS.say(w.k,s);};
+}
+const fcFlip=()=>fcCard.classList.toggle('flipped');
+const fcGo=d=>{ fcPos=(fcPos+d+deck.length)%deck.length; fcRender(); };
+fcCard.addEventListener('click',fcFlip);
+fcCard.addEventListener('keydown',e=>{ if(e.key===' '||e.key==='Enter'){e.preventDefault(); fcFlip();} });
+$('#fcFlip').addEventListener('click',fcFlip);
+$('#fcNext').addEventListener('click',()=>fcGo(1));
+$('#fcPrev').addEventListener('click',()=>fcGo(-1));
+$('#fcShuffle').addEventListener('click',()=>{ deck=shuffle(deck); fcPos=0; fcRender(); });
+document.addEventListener('keydown',e=>{
+  if($('#panel-cards').hidden) return;
+  if(e.target.tagName==='INPUT') return;
+  if(e.key==='ArrowRight') fcGo(1);
+  else if(e.key==='ArrowLeft') fcGo(-1);
+});
+fcRender();
+
+/* ---------------- Quiz ---------------- */
+const quizWrap=$('#quizWrap');
+let qOrder=[], qIdx=0, score=0, streak=0, bestStreak=0, answered=false;
+
+function startQuiz(){
+  qOrder=shuffle(VOCAB.map((_,i)=>i));
+  qIdx=0; score=0; streak=0; bestStreak=0;
+  renderQuestion();
+}
+function renderQuestion(){
+  answered=false;
+  const w=VOCAB[qOrder[qIdx]];
+  const wrong=shuffle(VOCAB.filter(v=>v.en!==w.en)).slice(0,3);
+  const opts=shuffle([w,...wrong]);
+  const keys=['A','B','C','D'];
+  quizWrap.innerHTML=`
+    <div class="quiz-meta">
+      <div class="progress-cap" style="margin:0"><span>Question ${qIdx+1} of ${VOCAB.length}</span></div>
+      <div class="score-badges">
+        <div class="badge"><span class="n" id="qScore">${score}</span><span class="l">Score</span></div>
+        <div class="badge streak"><span class="n" id="qStreak">${streak}</span><span class="l">Streak</span></div>
+      </div>
+    </div>
+    <div class="progress-line"><span style="width:${(qIdx/VOCAB.length)*100}%"></span></div>
+    <div class="quiz-q" style="margin-top:16px">
+      <div class="qlabel">What does this word mean?</div>
+      <div class="kanji">${w.k}</div>
+      <div class="kana">${w.kana}</div>
+      <div class="romaji">${w.romaji}</div>
+      <div style="margin-top:12px"></div>
+    </div>
+    <div class="options" id="qOptions"></div>
+    <div class="feedback" id="qFeedback"></div>
+    <div class="quiz-actions"><button class="btn primary" id="qNext" style="display:none">Next →</button></div>`;
+  // speaker under the prompt
+  $('.quiz-q').appendChild(Object.assign(speakBtn(w.k),{}));
+  const optWrap=$('#qOptions');
+  opts.forEach((o,i)=>{
+    const b=document.createElement('button');
+    b.className='opt'; b.type='button';
+    b.innerHTML=`<span class="key">${keys[i]}</span><span>${o.en}</span>`;
+    b.addEventListener('click',()=>choose(b,o,w));
+    optWrap.appendChild(b);
+  });
+}
+function choose(btn,chosen,correct){
+  if(answered) return;
+  answered=true;
+  const right = chosen.en===correct.en;
+  $$('.opt').forEach(b=>{
+    b.disabled=true;
+    const label=b.querySelector('span:last-child').textContent;
+    if(label===correct.en) b.classList.add('correct');
+    else if(b===btn) b.classList.add('wrong');
+    else b.classList.add('dim');
+  });
+  if(right){ score++; streak++; bestStreak=Math.max(bestStreak,streak); }
+  else { streak=0; }
+  $('#qScore').textContent=score; $('#qStreak').textContent=streak;
+  const fb=$('#qFeedback');
+  fb.className='feedback show';
+  fb.innerHTML=`
+    <div class="stamp ${right?'ok':'no'}">${right?'○':'×'}</div>
+    <div class="fb-body">
+      <div class="fb-title">${right?'正解 — Correct!':'不正解 — the answer is '+correct.en}</div>
+      <div class="ex-jp">${correct.ex.jp}</div>
+      <div class="ex-ro">${correct.ex.ro}</div>
+      <div class="ex-en">${correct.ex.en}</div>
+    </div>`;
+  fb.appendChild(speakBtn(correct.ex.jp));
+  const next=$('#qNext'); next.style.display='inline-flex';
+  next.textContent = qIdx===VOCAB.length-1 ? 'See results →' : 'Next →';
+  next.onclick=()=>{ if(qIdx===VOCAB.length-1) showResults(); else { qIdx++; renderQuestion(); } };
+  next.focus();
+}
+function showResults(){
+  const pct=Math.round(score/VOCAB.length*100);
+  let msg;
+  if(pct===100) msg='満点！ Perfect — you’re interview-ready.';
+  else if(pct>=80) msg='お見事。 Excellent work — polish the few you missed.';
+  else if(pct>=60) msg='いい調子。 Good progress — another round will lock it in.';
+  else msg='頑張って。 Keep going — review the Learn deck and try again.';
+  quizWrap.innerHTML=`
+    <div class="results">
+      <div class="big-seal">合格<br>判定</div>
+      <h3>Results</h3>
+      <div class="r-score">${score} / ${VOCAB.length}</div>
+      <p>${pct}% correct · best streak ${bestStreak}<br>${msg}</p>
+      <button class="btn primary" id="qRestart">↻ Play again</button>
+    </div>`;
+  $('#qRestart').addEventListener('click',startQuiz);
+}
+startQuiz();
+
+/* ---------------- Phrases ---------------- */
+const pl=$('#phraseList');
+PHRASES.forEach((p,i)=>{
+  const c=document.createElement('article');
+  c.className='pcard';
+  c.innerHTML=`
+    <div class="pnum">${i+1}</div>
+    <div class="pattern">${p.pattern}</div>
+    <div class="p-ro">${p.romaji}</div>
+    <div class="p-use">${p.use}</div>
+    <div class="p-ex">
+      <div class="ex-jp"></div>
+      <div class="ex-ro">${p.ex.ro}</div>
+      <div class="ex-en">${p.ex.en}</div>
+    </div>`;
+  const exjp=$('.ex-jp',c);
+  exjp.textContent=p.ex.jp+' ';
+  exjp.appendChild(speakBtn(p.ex.jp));
+  pl.appendChild(c);
+});
+
+/* ---------------- Tabs ---------------- */
+const tabs=$$('.tab');
+tabs.forEach(t=>{
+  t.addEventListener('click',()=>{
+    tabs.forEach(x=>x.setAttribute('aria-selected', x===t));
+    $$('.panel').forEach(p=>p.hidden = p.id!==t.getAttribute('aria-controls'));
+    if(t.id==='tab-quiz'){} // quiz persists
+  });
+});
+
+/* ---------------- Global toggles ---------------- */
+const romajiT=$('#romajiToggle');
+romajiT.addEventListener('click',()=>{
+  const on = romajiT.getAttribute('aria-pressed')==='true';
+  romajiT.setAttribute('aria-pressed', String(!on));
+  document.body.classList.toggle('no-romaji', on);
+});
+
+const themeT=$('#themeToggle'), themeLabel=$('#themeLabel');
+function setTheme(dark){
+  document.documentElement.setAttribute('data-theme', dark?'dark':'light');
+  themeT.setAttribute('aria-pressed', String(dark));
+  themeLabel.textContent = dark?'Dark':'Light';
+}
+setTheme(window.matchMedia && window.matchMedia('(prefers-color-scheme:dark)').matches);
+themeT.addEventListener('click',()=>{
+  setTheme(document.documentElement.getAttribute('data-theme')!=='dark');
+});
+</script>
+
+</body>
+</html>
