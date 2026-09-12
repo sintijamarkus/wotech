@@ -1,0 +1,4 @@
+# Build artifacts
+my_printf_test
+*.o
+*.a
