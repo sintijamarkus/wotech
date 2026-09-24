@@ -1,0 +1,1866 @@
+<!DOCTYPE html>
+<html lang="lv">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>RecoverWith - Fizioterapijas Platforma</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        :root {
+            --navy: #0F3A5C;
+            --soft-blue: #1B5E7A;
+            --teal: #2B8A99;
+            --light-teal: #5BA9B8;
+            --green: #A8D65E;
+            --light-green: #D4E8A8;
+            --light-bg: #F8FAFB;
+            --border-color: #E8ECEF;
+            --text-dark: #1F2937;
+            --text-light: #7A8A9A;
+            --danger: #E53935;
+            --warning: #FFA726;
+        }
+
+        body {
+            font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Oxygen, Ubuntu, Cantarell, sans-serif;
+            background: var(--light-bg);
+            color: var(--text-dark);
+            overflow-x: hidden;
+        }
+
+        .container {
+            max-width: 1400px;
+            margin: 0 auto;
+        }
+
+        /* HEADER */
+        .header {
+            background: white;
+            border-bottom: 1px solid var(--border-color);
+            padding: 16px 20px;
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            box-shadow: 0 2px 8px rgba(31, 41, 55, 0.08);
+        }
+
+        .logo {
+            font-size: 24px;
+            font-weight: 700;
+            color: var(--navy);
+            display: flex;
+            align-items: center;
+            gap: 8px;
+        }
+
+        .logo-icon {
+            width: 36px;
+            height: 36px;
+            background: linear-gradient(135deg, var(--navy) 0%, var(--teal) 100%);
+            border-radius: 10px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            color: var(--green);
+            font-weight: bold;
+            font-size: 20px;
+            box-shadow: 0 4px 12px rgba(15, 58, 92, 0.2);
+        }
+
+        .header-right {
+            display: flex;
+            align-items: center;
+            gap: 20px;
+        }
+
+        .role-badge {
+            background: linear-gradient(135deg, var(--teal) 0%, var(--light-teal) 100%);
+            color: white;
+            padding: 8px 14px;
+            border-radius: 10px;
+            font-size: 12px;
+            font-weight: 600;
+            box-shadow: 0 2px 8px rgba(43, 138, 153, 0.2);
+        }
+
+        .user-info {
+            display: flex;
+            align-items: center;
+            gap: 12px;
+        }
+
+        .avatar {
+            width: 40px;
+            height: 40px;
+            border-radius: 50%;
+            background: linear-gradient(135deg, var(--teal) 0%, var(--light-teal) 100%);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            color: white;
+            font-weight: 600;
+            font-size: 14px;
+            box-shadow: 0 2px 8px rgba(43, 138, 153, 0.2);
+        }
+
+        /* MAIN LAYOUT */
+        .main {
+            display: grid;
+            grid-template-columns: 260px 1fr;
+            gap: 0;
+            min-height: calc(100vh - 60px);
+        }
+
+        .sidebar {
+            background: white;
+            border-right: 1px solid var(--border-color);
+            overflow-y: auto;
+            padding: 20px 0;
+        }
+
+        .content {
+            overflow-y: auto;
+            padding: 24px;
+        }
+
+        /* NAVIGATION */
+        .nav-item {
+            padding: 12px 16px;
+            margin: 4px 12px;
+            border-left: 3px solid transparent;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            color: var(--text-light);
+            font-weight: 500;
+            font-size: 14px;
+            display: flex;
+            align-items: center;
+            gap: 12px;
+            border-radius: 10px;
+        }
+
+        .nav-item:hover {
+            background: var(--light-bg);
+            color: var(--navy);
+            border-left-color: transparent;
+        }
+
+        .nav-item.active {
+            background: rgba(43, 138, 153, 0.1);
+            border-left-color: var(--teal);
+            color: var(--teal);
+        }
+
+        .nav-icon {
+            font-size: 18px;
+        }
+
+        /* TABS */
+        .tabs {
+            display: flex;
+            gap: 0;
+            border-bottom: 1px solid var(--border-color);
+            margin-bottom: 24px;
+        }
+
+        .tab {
+            padding: 12px 20px;
+            cursor: pointer;
+            border-bottom: 3px solid transparent;
+            color: var(--text-light);
+            font-weight: 500;
+            transition: all 0.2s;
+        }
+
+        .tab:hover {
+            color: var(--navy);
+        }
+
+        .tab.active {
+            border-bottom-color: var(--teal);
+            color: var(--navy);
+        }
+
+        /* CARDS */
+        .card {
+            background: white;
+            border-radius: 20px;
+            border: 1px solid var(--border-color);
+            padding: 24px;
+            margin-bottom: 20px;
+            box-shadow: 0 2px 8px rgba(31, 41, 55, 0.08);
+            transition: all 0.3s ease;
+        }
+
+        .card:hover {
+            box-shadow: 0 4px 16px rgba(31, 41, 55, 0.12);
+        }
+
+        .card-header {
+            font-size: 16px;
+            font-weight: 600;
+            color: var(--navy);
+            margin-bottom: 16px;
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+        }
+
+        /* GRID & LAYOUT */
+        .grid-2 {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 20px;
+            margin-bottom: 20px;
+        }
+
+        .grid-3 {
+            display: grid;
+            grid-template-columns: repeat(3, 1fr);
+            gap: 20px;
+            margin-bottom: 20px;
+        }
+
+        /* BUTTONS */
+        .btn {
+            padding: 12px 20px;
+            border: none;
+            border-radius: 12px;
+            cursor: pointer;
+            font-weight: 600;
+            font-size: 14px;
+            transition: all 0.3s ease;
+            display: inline-flex;
+            align-items: center;
+            gap: 8px;
+        }
+
+        .btn-primary {
+            background: linear-gradient(135deg, var(--teal) 0%, var(--light-teal) 100%);
+            color: white;
+            box-shadow: 0 4px 12px rgba(43, 138, 153, 0.25);
+        }
+
+        .btn-primary:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 6px 20px rgba(43, 138, 153, 0.35);
+        }
+
+        .btn-secondary {
+            background: white;
+            color: var(--teal);
+            border: 1.5px solid var(--light-teal);
+        }
+
+        .btn-secondary:hover {
+            background: rgba(91, 169, 184, 0.08);
+            border-color: var(--teal);
+        }
+
+        .btn-small {
+            padding: 6px 12px;
+            font-size: 12px;
+        }
+
+        .btn-block {
+            width: 100%;
+            justify-content: center;
+        }
+
+        /* FORMS */
+        .form-group {
+            margin-bottom: 16px;
+        }
+
+        label {
+            display: block;
+            margin-bottom: 6px;
+            font-weight: 600;
+            font-size: 14px;
+            color: var(--navy);
+        }
+
+        input, textarea, select {
+            width: 100%;
+            padding: 12px 14px;
+            border: 1.5px solid var(--border-color);
+            border-radius: 12px;
+            font-size: 14px;
+            font-family: inherit;
+            transition: all 0.3s ease;
+            background: var(--light-bg);
+        }
+
+        input:focus, textarea:focus, select:focus {
+            outline: none;
+            border-color: var(--teal);
+            background: white;
+            box-shadow: 0 0 0 4px rgba(43, 138, 153, 0.12);
+        }
+
+        textarea {
+            resize: vertical;
+            min-height: 80px;
+        }
+
+        /* PATIENT LIST */
+        .patient-item {
+            background: white;
+            border: 1px solid var(--border-color);
+            border-radius: 16px;
+            padding: 18px;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            margin-bottom: 12px;
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+        }
+
+        .patient-item:hover {
+            border-color: var(--light-teal);
+            box-shadow: 0 6px 16px rgba(43, 138, 153, 0.12);
+            transform: translateY(-2px);
+        }
+
+        .patient-info {
+            display: flex;
+            align-items: center;
+            gap: 12px;
+            flex: 1;
+        }
+
+        .patient-avatar {
+            width: 50px;
+            height: 50px;
+            border-radius: 50%;
+            background: linear-gradient(135deg, var(--teal) 0%, var(--light-teal) 100%);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            color: white;
+            font-weight: 600;
+            font-size: 18px;
+            box-shadow: 0 4px 12px rgba(43, 138, 153, 0.2);
+        }
+
+        .patient-details h3 {
+            font-size: 15px;
+            margin-bottom: 4px;
+            color: var(--navy);
+        }
+
+        .patient-details p {
+            font-size: 13px;
+            color: var(--text-light);
+        }
+
+        .patient-status {
+            padding: 6px 12px;
+            border-radius: 8px;
+            font-size: 12px;
+            font-weight: 600;
+        }
+
+        .status-active {
+            background: rgba(168, 214, 94, 0.15);
+            color: var(--green);
+        }
+
+        /* EXERCISE LIST */
+        .exercise-item {
+            background: white;
+            border-radius: 16px;
+            border: 1px solid var(--border-color);
+            padding: 18px;
+            margin-bottom: 12px;
+            display: flex;
+            gap: 16px;
+            cursor: pointer;
+            transition: all 0.3s ease;
+        }
+
+        .exercise-item:hover {
+            border-color: var(--light-teal);
+            box-shadow: 0 6px 16px rgba(43, 138, 153, 0.12);
+            transform: translateY(-2px);
+        }
+
+        .exercise-image {
+            width: 90px;
+            height: 90px;
+            background: linear-gradient(135deg, var(--light-teal) 0%, var(--teal) 100%);
+            border-radius: 14px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            color: white;
+            font-size: 36px;
+            flex-shrink: 0;
+            box-shadow: 0 4px 12px rgba(43, 138, 153, 0.2);
+        }
+
+        .exercise-content {
+            flex: 1;
+        }
+
+        .exercise-content h3 {
+            font-size: 15px;
+            color: var(--navy);
+            margin-bottom: 4px;
+        }
+
+        .exercise-content p {
+            font-size: 13px;
+            color: var(--text-light);
+            margin-bottom: 8px;
+        }
+
+        .exercise-meta {
+            display: flex;
+            gap: 16px;
+            font-size: 12px;
+            color: var(--text-light);
+        }
+
+        /* PROGRESS CARDS */
+        .progress-card {
+            background: white;
+            border-radius: 20px;
+            border: 1px solid var(--border-color);
+            padding: 24px;
+        }
+
+        .metric {
+            text-align: center;
+            padding: 24px;
+            background: var(--light-bg);
+            border-radius: 16px;
+        }
+
+        .metric-value {
+            font-size: 36px;
+            font-weight: 700;
+            color: var(--teal);
+            line-height: 1;
+            margin-bottom: 8px;
+        }
+
+        .metric-label {
+            font-size: 13px;
+            color: var(--text-light);
+            font-weight: 500;
+        }
+
+        /* CHART */
+        .chart-container {
+            position: relative;
+            height: 240px;
+            margin: 20px 0;
+        }
+
+        .chart-bar {
+            display: flex;
+            align-items: flex-end;
+            justify-content: space-around;
+            height: 100%;
+            gap: 4px;
+        }
+
+        .bar {
+            flex: 1;
+            background: linear-gradient(to top, var(--teal), var(--light-teal));
+            border-radius: 6px 6px 0 0;
+            min-height: 8px;
+            position: relative;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            box-shadow: 0 2px 4px rgba(43, 138, 153, 0.15);
+        }
+
+        .bar:hover {
+            background: linear-gradient(to top, var(--soft-blue), var(--navy));
+            opacity: 0.95;
+            transform: translateY(-2px);
+            box-shadow: 0 4px 8px rgba(43, 138, 153, 0.2);
+        }
+
+        .bar-label {
+            position: absolute;
+            bottom: -20px;
+            left: 50%;
+            transform: translateX(-50%);
+            font-size: 11px;
+            color: var(--text-light);
+            white-space: nowrap;
+        }
+
+        /* CALENDAR */
+        .calendar {
+            display: grid;
+            grid-template-columns: repeat(7, 1fr);
+            gap: 4px;
+            margin: 20px 0;
+        }
+
+        .calendar-day-header {
+            padding: 8px;
+            text-align: center;
+            font-weight: 600;
+            font-size: 12px;
+            color: var(--text-light);
+            text-transform: uppercase;
+        }
+
+        .calendar-day {
+            aspect-ratio: 1;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            border-radius: 12px;
+            font-size: 13px;
+            font-weight: 600;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            border: 1.5px solid var(--border-color);
+            position: relative;
+        }
+
+        .calendar-day.completed {
+            background: var(--green);
+            color: white;
+            border-color: var(--green);
+            box-shadow: 0 4px 12px rgba(168, 214, 94, 0.25);
+        }
+
+        .calendar-day.completed:hover {
+            transform: scale(1.08);
+            box-shadow: 0 6px 16px rgba(168, 214, 94, 0.35);
+        }
+
+        .calendar-day.missed {
+            background: rgba(229, 57, 53, 0.1);
+            color: var(--danger);
+            border-color: rgba(229, 57, 53, 0.3);
+        }
+
+        .calendar-day.rest {
+            background: var(--light-bg);
+            color: var(--text-light);
+        }
+
+        .calendar-day.upcoming {
+            background: white;
+            color: var(--text-light);
+            box-shadow: 0 2px 6px rgba(0,0,0,0.04);
+        }
+
+        .calendar-day.upcoming:hover {
+            background: var(--light-bg);
+            box-shadow: 0 4px 12px rgba(43, 138, 153, 0.08);
+        }
+
+        /* BEFORE/AFTER COMPARISON */
+        .photo-comparison {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 16px;
+            margin: 20px 0;
+        }
+
+        .photo-item {
+            border-radius: 16px;
+            overflow: hidden;
+            border: 1px solid var(--border-color);
+            box-shadow: 0 4px 12px rgba(31, 41, 55, 0.08);
+        }
+
+        .photo-placeholder {
+            width: 100%;
+            aspect-ratio: 3/4;
+            background: linear-gradient(135deg, var(--light-teal) 0%, var(--teal) 100%);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            color: white;
+            font-size: 48px;
+            box-shadow: 0 4px 12px rgba(43, 138, 153, 0.2) inset;
+        }
+
+        .photo-date {
+            padding: 8px 12px;
+            background: var(--light-bg);
+            font-size: 12px;
+            color: var(--text-light);
+            border-top: 1px solid var(--border-color);
+        }
+
+        /* PAIN SCALE */
+        .pain-scale {
+            display: flex;
+            gap: 8px;
+            margin: 16px 0;
+            flex-wrap: wrap;
+        }
+
+        .pain-level {
+            width: 44px;
+            height: 44px;
+            border-radius: 10px;
+            border: 2px solid var(--border-color);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            cursor: pointer;
+            font-weight: 600;
+            font-size: 13px;
+            transition: all 0.3s ease;
+            background: white;
+        }
+
+        .pain-level:hover {
+            border-color: var(--light-teal);
+            box-shadow: 0 4px 12px rgba(43, 138, 153, 0.15);
+        }
+
+        .pain-level.selected {
+            background: linear-gradient(135deg, var(--teal) 0%, var(--light-teal) 100%);
+            color: white;
+            border-color: var(--teal);
+            box-shadow: 0 4px 12px rgba(43, 138, 153, 0.25);
+        }
+
+        /* STREAK */
+        .streak-container {
+            text-align: center;
+            padding: 28px;
+            background: linear-gradient(135deg, rgba(168, 214, 94, 0.1) 0%, rgba(91, 169, 184, 0.08) 100%);
+            border-radius: 18px;
+            border: 1.5px solid rgba(168, 214, 94, 0.2);
+        }
+
+        .streak-icon {
+            font-size: 52px;
+            margin-bottom: 12px;
+        }
+
+        .streak-value {
+            font-size: 40px;
+            font-weight: 700;
+            color: var(--green);
+            line-height: 1;
+        }
+
+        .streak-label {
+            font-size: 13px;
+            color: var(--text-light);
+            margin-top: 8px;
+        }
+
+        /* MODAL */
+        .modal-overlay {
+            display: none;
+            position: fixed;
+            top: 0;
+            left: 0;
+            right: 0;
+            bottom: 0;
+            background: rgba(0, 0, 0, 0.5);
+            z-index: 1000;
+            align-items: center;
+            justify-content: center;
+        }
+
+        .modal-overlay.active {
+            display: flex;
+        }
+
+        .modal {
+            background: white;
+            border-radius: 24px;
+            width: 90%;
+            max-width: 600px;
+            max-height: 90vh;
+            overflow-y: auto;
+            box-shadow: 0 20px 60px rgba(0, 0, 0, 0.25);
+        }
+
+        .modal-header {
+            padding: 20px;
+            border-bottom: 1px solid var(--border-color);
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+        }
+
+        .modal-header h2 {
+            font-size: 20px;
+            color: var(--navy);
+        }
+
+        .close-btn {
+            background: none;
+            border: none;
+            font-size: 24px;
+            cursor: pointer;
+            color: var(--text-light);
+        }
+
+        .modal-body {
+            padding: 20px;
+        }
+
+        /* ALERTS */
+        .alert {
+            padding: 14px 16px;
+            border-radius: 12px;
+            margin-bottom: 16px;
+            font-size: 14px;
+        }
+
+        .alert-success {
+            background: rgba(168, 214, 94, 0.15);
+            color: var(--green);
+            border: 1.5px solid rgba(168, 214, 94, 0.25);
+        }
+
+        .alert-info {
+            background: rgba(43, 138, 153, 0.12);
+            color: var(--soft-blue);
+            border: 1.5px solid rgba(43, 138, 153, 0.25);
+        }
+
+        /* HIDDEN SECTIONS */
+        .section {
+            display: none;
+        }
+
+        .section.active {
+            display: block;
+        }
+
+        /* RESPONSIVE */
+        @media (max-width: 1024px) {
+            .grid-2, .grid-3 {
+                grid-template-columns: 1fr;
+            }
+
+            .photo-comparison {
+                grid-template-columns: 1fr;
+            }
+        }
+
+        @media (max-width: 768px) {
+            .main {
+                grid-template-columns: 1fr;
+            }
+
+            .sidebar {
+                display: none;
+            }
+
+            .header {
+                flex-wrap: wrap;
+            }
+
+            .logo {
+                font-size: 20px;
+            }
+
+            .content {
+                padding: 16px;
+            }
+        }
+
+        /* HIDDEN BY DEFAULT */
+        .hidden {
+            display: none;
+        }
+
+        /* UTILITY */
+        .text-center {
+            text-align: center;
+        }
+
+        .mt-20 {
+            margin-top: 20px;
+        }
+
+        .mb-20 {
+            margin-bottom: 20px;
+        }
+
+        .flex {
+            display: flex;
+        }
+
+        .gap-12 {
+            gap: 12px;
+        }
+
+        .items-center {
+            align-items: center;
+        }
+
+        .justify-between {
+            justify-content: space-between;
+        }
+
+        .badge {
+            display: inline-block;
+            padding: 6px 12px;
+            border-radius: 8px;
+            font-size: 12px;
+            font-weight: 600;
+        }
+
+        .badge-green {
+            background: rgba(168, 214, 94, 0.15);
+            color: var(--green);
+        }
+
+        .badge-blue {
+            background: rgba(43, 138, 153, 0.15);
+            color: var(--teal);
+        }
+    </style>
+</head>
+<body>
+    <!-- HEADER -->
+    <div class="header">
+        <div class="logo">
+            <div class="logo-icon">R</div>
+            <span>RecoverWith</span>
+        </div>
+        <div class="header-right">
+            <select id="roleSelect" style="padding: 8px 12px; border: 1px solid var(--border-color); border-radius: 6px; font-weight: 600; cursor: pointer;">
+                <option value="therapist">👨‍⚕️ Fizioterapeita Vide</option>
+                <option value="patient">👤 Pacienta Vide</option>
+            </select>
+            <div class="user-info">
+                <div>
+                    <div style="font-size: 14px; font-weight: 600;" id="userName">Dr. Anda Bērziņa</div>
+                    <div style="font-size: 12px; color: var(--text-light);" id="userRole">Fizioterapeite</div>
+                </div>
+                <div class="avatar" id="userAvatar">AB</div>
+            </div>
+        </div>
+    </div>
+
+    <!-- MAIN LAYOUT -->
+    <div class="main container">
+        <!-- THERAPIST SIDEBAR -->
+        <div class="sidebar" id="therapistSidebar">
+            <div style="padding: 20px; border-bottom: 1px solid var(--border-color);">
+                <h3 style="font-size: 12px; color: var(--text-light); font-weight: 600; text-transform: uppercase; margin-bottom: 12px;">Izvēlne</h3>
+            </div>
+            <div class="nav-item active" onclick="switchTherapistSection('patients')">
+                <span class="nav-icon">👥</span>
+                <span>Pacienti</span>
+            </div>
+            <div class="nav-item" onclick="switchTherapistSection('exercises')">
+                <span class="nav-icon">💪</span>
+                <span>Vingrojumi</span>
+            </div>
+            <div class="nav-item" onclick="switchTherapistSection('messages')">
+                <span class="nav-icon">💬</span>
+                <span>Ziņojumi</span>
+            </div>
+            <div class="nav-item" onclick="switchTherapistSection('settings')">
+                <span class="nav-icon">⚙️</span>
+                <span>Iestatījumi</span>
+            </div>
+        </div>
+
+        <!-- CONTENT AREA -->
+        <div class="content">
+            <!-- THERAPIST SECTIONS -->
+            <div id="therapistContent">
+                <!-- PATIENTS SECTION -->
+                <div id="patientsSection" class="section active">
+                    <div class="card-header" style="margin-bottom: 24px;">
+                        <span>Mani Pacienti</span>
+                        <button class="btn btn-primary" onclick="openAddPatientModal()">+ Pievienot Pacientu</button>
+                    </div>
+
+                    <div id="patientsList"></div>
+                </div>
+
+                <!-- PATIENT DETAIL VIEW -->
+                <div id="patientDetailSection" class="section">
+                    <button class="btn btn-secondary" onclick="switchTherapistSection('patients')" style="margin-bottom: 20px;">← Atpakaļ uz Pacientiem</button>
+
+                    <div class="grid-2">
+                        <!-- PATIENT INFO CARD -->
+                        <div class="card">
+                            <div class="card-header">Pacienta Informācija</div>
+                            <div class="patient-info" style="margin-bottom: 20px;">
+                                <div class="patient-avatar" id="detailAvatar">JD</div>
+                                <div>
+                                    <h3 id="detailName" style="font-size: 18px; margin-bottom: 4px;">Jānis Domburs</h3>
+                                    <p id="detailGoal" style="color: var(--text-light); font-size: 14px;">Personīgais mērķis:</p>
+                                </div>
+                            </div>
+                            <div class="form-group">
+                                <label>Personīgais Mērķis</label>
+                                <textarea id="patientGoal" placeholder="Uzkāpt līdz 8. stāvam bez sāpēm..."></textarea>
+                            </div>
+                            <button class="btn btn-primary btn-block" onclick="updatePatientGoal()">Saglabāt Mērķi</button>
+                        </div>
+
+                        <!-- PROGRAM CARD -->
+                        <div class="card">
+                            <div class="card-header">Aktīvā Programma</div>
+                            <div class="form-group">
+                                <label>Programmas Nosaukums</label>
+                                <input type="text" id="programName" placeholder="Vingrošanas Programma #1" />
+                            </div>
+                            <div class="form-group">
+                                <label>Programmas Deskripjcija</label>
+                                <textarea id="programDescription" placeholder="Aprakstiet programmas mērķi un nozīmi..."></textarea>
+                            </div>
+                            <button class="btn btn-primary btn-block" onclick="saveProgram()">Saglabāt Programmu</button>
+                        </div>
+                    </div>
+
+                    <!-- EXERCISES IN PROGRAM -->
+                    <div class="card">
+                        <div class="card-header">
+                            <span>Programmas Vingrojumi</span>
+                            <button class="btn btn-primary btn-small" onclick="openAddExerciseModal()">+ Pievienot</button>
+                        </div>
+                        <div id="programExercises"></div>
+                    </div>
+
+                    <!-- PATIENT PROGRESS -->
+                    <div class="card">
+                        <div class="card-header">Pacienta Progress</div>
+                        <div class="grid-2">
+                            <div>
+                                <h4 style="font-size: 12px; text-transform: uppercase; color: var(--text-light); margin-bottom: 12px; font-weight: 600;">Sāpju Līmeņa Izmaiņas</h4>
+                                <div class="chart-container">
+                                    <div class="chart-bar" id="painChart"></div>
+                                </div>
+                            </div>
+                            <div>
+                                <h4 style="font-size: 12px; text-transform: uppercase; color: var(--text-light); margin-bottom: 12px; font-weight: 600;">Izpildes Vēsture (Šonedēļ)</h4>
+                                <div class="calendar" id="patientCalendar"></div>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- PATIENT FEEDBACK -->
+                    <div class="card">
+                        <div class="card-header">Pacienta Atgriezeniskā Saite</div>
+                        <div id="patientFeedback"></div>
+                    </div>
+                </div>
+
+                <!-- EXERCISES SECTION -->
+                <div id="exercisesSection" class="section">
+                    <div class="card-header" style="margin-bottom: 24px;">
+                        <span>Vingrojumu Bibliotēka</span>
+                        <button class="btn btn-primary" onclick="openCreateExerciseModal()">+ Izveidot Vingrojumu</button>
+                    </div>
+
+                    <div id="exercisesList"></div>
+                </div>
+
+                <!-- MESSAGES SECTION -->
+                <div id="messagesSection" class="section">
+                    <div class="card-header" style="margin-bottom: 24px;">Ziņojumi</div>
+                    <div class="card">
+                        <p style="text-align: center; color: var(--text-light); padding: 40px 20px;">
+                            🔔 Šeit tiks parādīti ziņojumi no pacientiem
+                        </p>
+                    </div>
+                </div>
+
+                <!-- SETTINGS SECTION -->
+                <div id="settingsSection" class="section">
+                    <div class="card-header" style="margin-bottom: 24px;">Iestatījumi</div>
+                    <div class="card">
+                        <p style="text-align: center; color: var(--text-light); padding: 40px 20px;">
+                            ⚙️ Iestatījumi (paredzēti turpmākai izstrādei)
+                        </p>
+                    </div>
+                </div>
+            </div>
+
+            <!-- PATIENT SECTIONS -->
+            <div id="patientContent" style="display: none;">
+                <!-- PATIENT HOME -->
+                <div id="patientHomeSection" class="section active">
+                    <div class="card" style="background: linear-gradient(135deg, rgba(74, 155, 168, 0.1) 0%, rgba(123, 191, 184, 0.1) 100%); border: 1px solid var(--border-color); margin-bottom: 24px;">
+                        <div style="display: flex; align-items: center; justify-content: space-between;">
+                            <div>
+                                <div style="font-size: 14px; color: var(--text-light); margin-bottom: 8px;">Jūsu Personīgais Mērķis</div>
+                                <div style="font-size: 22px; font-weight: 700; color: var(--navy); line-height: 1.3;">Uzkāpt līdz 8. stāvam bez sāpēm</div>
+                            </div>
+                            <div style="font-size: 64px;">🎯</div>
+                        </div>
+                    </div>
+
+                    <div class="grid-2">
+                        <div class="card">
+                            <div class="card-header">📊 Sāpju Līmeņa Progess</div>
+                            <div class="grid-2">
+                                <div class="metric">
+                                    <div class="metric-value" style="color: var(--danger);">7/10</div>
+                                    <div class="metric-label">Sākumā</div>
+                                </div>
+                                <div class="metric">
+                                    <div class="metric-value" style="color: var(--green);">3/10</div>
+                                    <div class="metric-label">Tagad</div>
+                                </div>
+                            </div>
+                            <div style="text-align: center; padding: 12px; background: var(--light-bg); border-radius: 6px; margin-top: 12px;">
+                                <div style="font-size: 20px; font-weight: 700; color: var(--green);">↓ 57% uzlabojums</div>
+                            </div>
+                        </div>
+
+                        <div class="card">
+                            <div class="card-header">🔥 Jūsu Motivācijas Secība</div>
+                            <div class="streak-container">
+                                <div class="streak-icon">🔥</div>
+                                <div class="streak-value">12</div>
+                                <div class="streak-label">Secīgas dienas</div>
+                                <div style="font-size: 12px; color: var(--text-light); margin-top: 12px;">Labākā secība: 18 dienas</div>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="card">
+                        <div class="card-header">📅 Šonedēļ Plānotie Vingrojumi</div>
+                        <div id="weeklyPlan"></div>
+                    </div>
+
+                    <div class="card">
+                        <div class="card-header">💪 Šodienas Vingrojumi</div>
+                        <div id="todayExercises"></div>
+                    </div>
+                </div>
+
+                <!-- PROGRESS SECTION -->
+                <div id="progressSection" class="section">
+                    <button class="btn btn-secondary" onclick="switchPatientSection('home')" style="margin-bottom: 20px;">← Atpakaļ</button>
+
+                    <div class="card">
+                        <div class="card-header">📊 Sāpju Līmeņa Dinamika</div>
+                        <div style="padding: 20px;">
+                            <div class="chart-container">
+                                <div class="chart-bar" id="fullPainChart"></div>
+                            </div>
+                            <div style="margin-top: 24px; display: grid; grid-template-columns: repeat(2, 1fr); gap: 12px;">
+                                <div style="padding: 12px; background: var(--light-bg); border-radius: 6px; text-align: center;">
+                                    <div style="font-size: 28px; font-weight: 700; color: var(--navy);">7</div>
+                                    <div style="font-size: 12px; color: var(--text-light);">Sākuma Vērtējums</div>
+                                </div>
+                                <div style="padding: 12px; background: var(--light-bg); border-radius: 6px; text-align: center;">
+                                    <div style="font-size: 28px; font-weight: 700; color: var(--green);">3</div>
+                                    <div style="font-size: 12px; color: var(--text-light);">Pašlaik</div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="card">
+                        <div class="card-header">📅 Mēneša Izpildes Diagramma</div>
+                        <div class="calendar" id="monthCalendar"></div>
+                    </div>
+
+                    <div class="card">
+                        <div class="card-header">📸 Pirms / Pēc Salīdzinājums</div>
+                        <div class="photo-comparison">
+                            <div class="photo-item">
+                                <div class="photo-placeholder">📷</div>
+                                <div class="photo-date">Sākums: 2024.06.15</div>
+                            </div>
+                            <div class="photo-item">
+                                <div class="photo-placeholder">📷</div>
+                                <div class="photo-date">Tagad: 2024.09.24</div>
+                            </div>
+                        </div>
+                        <div style="margin-top: 16px;">
+                            <label style="display: flex; align-items: center; gap: 8px; cursor: pointer;">
+                                <input type="file" accept="image/*" style="width: auto;" />
+                                <span style="color: var(--teal); font-weight: 600;">Pievienot Fotoattēlu</span>
+                            </label>
+                        </div>
+                    </div>
+
+                    <div class="card">
+                        <div class="card-header">📝 Progresa Piezīmes</div>
+                        <div id="progressNotes"></div>
+                    </div>
+                </div>
+
+                <!-- EXERCISES SECTION -->
+                <div id="exercisesPatientSection" class="section">
+                    <button class="btn btn-secondary" onclick="switchPatientSection('home')" style="margin-bottom: 20px;">← Atpakaļ</button>
+
+                    <div class="card">
+                        <div class="card-header">📋 Mani Vingrojumi</div>
+                        <div id="patientExercisesList"></div>
+                    </div>
+                </div>
+
+                <!-- EXERCISE DETAIL SECTION -->
+                <div id="exerciseDetailSection" class="section">
+                    <button class="btn btn-secondary" onclick="switchPatientSection('exercises')" style="margin-bottom: 20px;">← Atpakaļ uz Vingrojumiem</button>
+
+                    <div class="grid-2">
+                        <div class="card">
+                            <div class="card-header">💪 Vingrojuma Demonstrācija</div>
+                            <div style="width: 100%; aspect-ratio: 3/4; background: linear-gradient(135deg, var(--teal) 0%, var(--light-teal) 100%); border-radius: 8px; display: flex; align-items: center; justify-content: center; color: white; font-size: 64px; margin-bottom: 16px;" id="exerciseDemo">🏃</div>
+                            <div>
+                                <h3 id="exerciseTitle" style="font-size: 18px; margin-bottom: 8px;">Kakla Vingrojums</h3>
+                                <div id="exerciseInstructions" style="color: var(--text-light); line-height: 1.6; font-size: 14px; margin-bottom: 16px;"></div>
+                                <div style="background: var(--light-bg); padding: 12px; border-radius: 6px; margin-bottom: 16px;">
+                                    <div style="font-size: 12px; color: var(--text-light); margin-bottom: 4px;">Fizioterapeita Piezīme</div>
+                                    <div id="exerciseTip" style="font-size: 14px; font-weight: 500; color: var(--navy);"></div>
+                                </div>
+                            </div>
+                        </div>
+
+                        <div class="card">
+                            <div class="card-header">✅ Pabeigt Vingrojumu</div>
+                            <div style="padding: 20px; text-align: center;">
+                                <div style="margin-bottom: 20px;">
+                                    <h3 style="font-size: 14px; color: var(--text-light); margin-bottom: 12px; font-weight: 600;">Kādas ir jūsu sāpes šobrīd?</h3>
+                                    <div class="pain-scale" id="painScaleInput"></div>
+                                </div>
+
+                                <div style="margin-bottom: 20px;">
+                                    <label style="display: block; font-size: 14px; margin-bottom: 8px; font-weight: 600;">Kā jūs jūtaties?</label>
+                                    <textarea style="width: 100%; min-height: 80px; padding: 10px; border: 1px solid var(--border-color); border-radius: 6px;" id="exerciseFeedback" placeholder="Aprakstiet savu pašsajūtu, grūtības vai panākumus..."></textarea>
+                                </div>
+
+                                <button class="btn btn-primary btn-block" onclick="submitExerciseCompletion()">✓ Atzīmēt kā Paveikts</button>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- MODALS -->
+    <!-- ADD PATIENT MODAL -->
+    <div class="modal-overlay" id="addPatientModal">
+        <div class="modal">
+            <div class="modal-header">
+                <h2>Pievienot Jaunu Pacientu</h2>
+                <button class="close-btn" onclick="closeModal('addPatientModal')">×</button>
+            </div>
+            <div class="modal-body">
+                <div class="form-group">
+                    <label>Vārds un Uzvārds</label>
+                    <input type="text" id="newPatientName" placeholder="Jānis Domburs" />
+                </div>
+                <div class="form-group">
+                    <label>E-pasta Adrese</label>
+                    <input type="email" id="newPatientEmail" placeholder="janis@example.com" />
+                </div>
+                <div class="form-group">
+                    <label>Telefona Numurs</label>
+                    <input type="tel" id="newPatientPhone" placeholder="+371 29123456" />
+                </div>
+                <div class="form-group">
+                    <label>Personīgais Mērķis</label>
+                    <textarea id="newPatientGoal" placeholder="Uzkāpt līdz 8. stāvam bez sāpēm..."></textarea>
+                </div>
+                <button class="btn btn-primary btn-block" onclick="addPatient()">Pievienot Pacientu</button>
+            </div>
+        </div>
+    </div>
+
+    <!-- CREATE EXERCISE MODAL -->
+    <div class="modal-overlay" id="createExerciseModal">
+        <div class="modal">
+            <div class="modal-header">
+                <h2>Izveidot Jaunu Vingrojumu</h2>
+                <button class="close-btn" onclick="closeModal('createExerciseModal')">×</button>
+            </div>
+            <div class="modal-body">
+                <div class="form-group">
+                    <label>Vingrojuma Nosaukums</label>
+                    <input type="text" id="exerciseName" placeholder="Kakla Attīrīšana" />
+                </div>
+                <div class="form-group">
+                    <label>Pacienta Instrukcijas (Vienkāršā Valodā)</label>
+                    <textarea id="exercisePatientInstructions" placeholder="Lēni pagrieziet galvu pa labi, turot 5 sekundes..."></textarea>
+                </div>
+                <div class="form-group">
+                    <label>Terapeitam (Latīņu Terminoloģija)</label>
+                    <textarea id="exerciseMedicalTerms" placeholder="Cervicalis rotatio dexter..."></textarea>
+                </div>
+                <div class="form-group">
+                    <label>Fizioterapeita Padoms</label>
+                    <textarea id="exerciseTipInput" placeholder="Sēdi ar taisnu muguru..."></textarea>
+                </div>
+                <div class="form-group">
+                    <label>Kategorija</label>
+                    <select id="exerciseCategory">
+                        <option value="kakls">Kakls</option>
+                        <option value="mugura">Mugura</option>
+                        <option value="ceļi">Ceļi</option>
+                        <option value="elposana">Elpošana</option>
+                        <option value="cits">Cits</option>
+                    </select>
+                </div>
+                <button class="btn btn-primary btn-block" onclick="createExercise()">Izveidot Vingrojumu</button>
+            </div>
+        </div>
+    </div>
+
+    <!-- ADD EXERCISE TO PROGRAM MODAL -->
+    <div class="modal-overlay" id="addExerciseModal">
+        <div class="modal">
+            <div class="modal-header">
+                <h2>Pievienot Vingrojumu Programmai</h2>
+                <button class="close-btn" onclick="closeModal('addExerciseModal')">×</button>
+            </div>
+            <div class="modal-body">
+                <div class="form-group">
+                    <label>Selectējiet Vingrojumu</label>
+                    <select id="selectExercise"></select>
+                </div>
+                <div class="grid-2">
+                    <div class="form-group">
+                        <label>Atkārtojumi</label>
+                        <input type="number" id="repetitions" value="10" min="1" />
+                    </div>
+                    <div class="form-group">
+                        <label>Sērijas</label>
+                        <input type="number" id="sets" value="3" min="1" />
+                    </div>
+                </div>
+                <div class="form-group">
+                    <label>Ilgums (minūtes)</label>
+                    <input type="number" id="duration" value="5" min="1" />
+                </div>
+                <div class="form-group">
+                    <label>Nedēļas Dienas (atlasiet dienas)</label>
+                    <div style="display: flex; flex-wrap: wrap; gap: 8px;">
+                        <label style="flex: 1; min-width: 80px; display: flex; align-items: center; gap: 6px;">
+                            <input type="checkbox" value="Pom" /> Pom
+                        </label>
+                        <label style="flex: 1; min-width: 80px; display: flex; align-items: center; gap: 6px;">
+                            <input type="checkbox" value="Otr" /> Otr
+                        </label>
+                        <label style="flex: 1; min-width: 80px; display: flex; align-items: center; gap: 6px;">
+                            <input type="checkbox" value="Tre" /> Tre
+                        </label>
+                        <label style="flex: 1; min-width: 80px; display: flex; align-items: center; gap: 6px;">
+                            <input type="checkbox" value="Cet" /> Cet
+                        </label>
+                        <label style="flex: 1; min-width: 80px; display: flex; align-items: center; gap: 6px;">
+                            <input type="checkbox" value="Pie" /> Pie
+                        </label>
+                        <label style="flex: 1; min-width: 80px; display: flex; align-items: center; gap: 6px;">
+                            <input type="checkbox" value="Ses" /> Ses
+                        </label>
+                        <label style="flex: 1; min-width: 80px; display: flex; align-items: center; gap: 6px;">
+                            <input type="checkbox" value="Sve" /> Sve
+                        </label>
+                    </div>
+                </div>
+                <button class="btn btn-primary btn-block" onclick="addExerciseToProgram()">Pievienot Vingrojumu</button>
+            </div>
+        </div>
+    </div>
+
+    <script>
+        // DATA STORAGE
+        const demoData = {
+            patients: [
+                {
+                    id: 1,
+                    name: "Jānis Domburs",
+                    email: "janis@example.com",
+                    phone: "+371 29123456",
+                    goal: "Uzkāpt līdz 8. stāvam bez sāpēm",
+                    initialPain: 7,
+                    currentPain: 3,
+                    avatar: "JD",
+                    startDate: "2024-06-15",
+                    program: {
+                        name: "Ceļa Stiprināšanas Programma",
+                        description: "Programma ceļa muskuļu stiprināšanai un sāpju mazināšanai"
+                    },
+                    exercises: [
+                        {
+                            id: 1,
+                            name: "Kakla Attīrīšana",
+                            reps: 10,
+                            sets: 3,
+                            duration: 5,
+                            days: ["Pom", "Tre", "Pie"],
+                            completed: 8,
+                            missed: 2
+                        },
+                        {
+                            id: 2,
+                            name: "Muguras Locīšana",
+                            reps: 15,
+                            sets: 3,
+                            duration: 7,
+                            days: ["Pom", "Tre", "Pie"],
+                            completed: 7,
+                            missed: 2
+                        }
+                    ],
+                    painHistory: [7, 6.5, 6, 5.5, 5, 4.5, 4, 3.5, 3],
+                    weeks: ["1. ned.", "2. ned.", "3. ned.", "4. ned.", "5. ned.", "6. ned.", "7. ned.", "8. ned.", "9. ned."],
+                    feedback: [
+                        { date: "2024-09-22", text: "Sāpes ir ievērojami mazinājušās, jūtos enerģisks!", pain: 3 },
+                        { date: "2024-09-20", text: "Šodien bija grūtības ar pēdējam vingrojumam, bet turpināšu.", pain: 3.5 }
+                    ]
+                }
+            ],
+            exercises: [
+                {
+                    id: 1,
+                    name: "Kakla Attīrīšana",
+                    instructions: "Lēni pagrieziet galvu pa labi, turot 5 sekundes. Pēc tam pagrieziet pa kreisi. Atkārtojiet 10 reizes.",
+                    medicalTerms: "Cervicalis rotatio dexter et sinister",
+                    tip: "Sēdi ar taisnu muguru",
+                    category: "kakls",
+                    emoji: "🔄"
+                },
+                {
+                    id: 2,
+                    name: "Muguras Locīšana",
+                    instructions: "Noliecieties uz priekšu, mēģinot sniegt tās pēdas. Palieciet 10 sekundes.",
+                    medicalTerms: "Flexio trunci anterior",
+                    tip: "Nekritieniet pēkšņi",
+                    category: "mugura",
+                    emoji: "🙏"
+                },
+                {
+                    id: 3,
+                    name: "Ceļa Stiepšana",
+                    instructions: "Sēžot paceliet kāju uz priekšu, spiežot kājus. Palieciet 5 sekundes.",
+                    medicalTerms: "Extensio genu",
+                    tip: "Vienmērīgi spiežiet",
+                    category: "ceļi",
+                    emoji: "🦵"
+                },
+                {
+                    id: 4,
+                    name: "Elpošanas Vingrojums",
+                    instructions: "Ieelpojiet caur degunu 4 sekundes, turot 4 sekundes, izelpojiet 4 sekundes.",
+                    medicalTerms: "Respiratio profunda",
+                    tip: "Mierīgi elpojiet",
+                    category: "elposana",
+                    emoji: "💨"
+                }
+            ]
+        };
+
+        let currentUser = { role: 'therapist', name: 'Dr. Anda Bērziņa' };
+        let currentPatient = demoData.patients[0];
+        let currentExercise = null;
+
+        // ROLE SWITCHING
+        document.getElementById('roleSelect').addEventListener('change', (e) => {
+            switchRole(e.target.value);
+        });
+
+        function switchRole(role) {
+            currentUser.role = role;
+
+            if (role === 'therapist') {
+                document.getElementById('therapistSidebar').style.display = 'block';
+                document.getElementById('therapistContent').style.display = 'block';
+                document.getElementById('patientContent').style.display = 'none';
+                document.getElementById('userName').textContent = 'Dr. Anda Bērziņa';
+                document.getElementById('userRole').textContent = 'Fizioterapeite';
+                document.getElementById('userAvatar').textContent = 'AB';
+                renderPatientsList();
+            } else {
+                document.getElementById('therapistSidebar').style.display = 'none';
+                document.getElementById('therapistContent').style.display = 'none';
+                document.getElementById('patientContent').style.display = 'block';
+                document.getElementById('userName').textContent = currentPatient.name;
+                document.getElementById('userRole').textContent = 'Pacients';
+                document.getElementById('userAvatar').textContent = currentPatient.avatar;
+                renderPatientHome();
+            }
+        }
+
+        // THERAPIST FUNCTIONS
+        function switchTherapistSection(section) {
+            // Hide all sections
+            document.querySelectorAll('#therapistContent .section').forEach(s => s.classList.remove('active'));
+            // Hide all nav items active state
+            document.querySelectorAll('.nav-item').forEach(n => n.classList.remove('active'));
+
+            // Show selected section
+            if (section === 'patients') {
+                document.getElementById('patientsSection').classList.add('active');
+                document.querySelectorAll('.nav-item')[0].classList.add('active');
+                renderPatientsList();
+            } else if (section === 'patient-detail') {
+                document.getElementById('patientDetailSection').classList.add('active');
+                renderPatientDetail();
+            } else if (section === 'exercises') {
+                document.getElementById('exercisesSection').classList.add('active');
+                document.querySelectorAll('.nav-item')[1].classList.add('active');
+                renderExercises();
+            } else if (section === 'messages') {
+                document.getElementById('messagesSection').classList.add('active');
+                document.querySelectorAll('.nav-item')[2].classList.add('active');
+            } else if (section === 'settings') {
+                document.getElementById('settingsSection').classList.add('active');
+                document.querySelectorAll('.nav-item')[3].classList.add('active');
+            }
+        }
+
+        function renderPatientsList() {
+            const html = demoData.patients.map(p => `
+                <div class="patient-item" onclick="selectPatient(${p.id})">
+                    <div class="patient-info">
+                        <div class="patient-avatar">${p.avatar}</div>
+                        <div class="patient-details">
+                            <h3>${p.name}</h3>
+                            <p>Mērķis: ${p.goal.substring(0, 40)}...</p>
+                            <p>Sāpes: ${p.initialPain}/10 → ${p.currentPain}/10</p>
+                        </div>
+                    </div>
+                    <div class="patient-status status-active">Aktīvs</div>
+                </div>
+            `).join('');
+
+            document.getElementById('patientsList').innerHTML = html;
+        }
+
+        function selectPatient(id) {
+            currentPatient = demoData.patients.find(p => p.id === id);
+            switchTherapistSection('patient-detail');
+        }
+
+        function renderPatientDetail() {
+            document.getElementById('detailName').textContent = currentPatient.name;
+            document.getElementById('detailAvatar').textContent = currentPatient.avatar;
+            document.getElementById('detailGoal').innerHTML = `<strong>Mērķis:</strong> ${currentPatient.goal}`;
+            document.getElementById('patientGoal').value = currentPatient.goal;
+            document.getElementById('programName').value = currentPatient.program.name;
+            document.getElementById('programDescription').value = currentPatient.program.description;
+
+            renderProgramExercises();
+            renderPainChart();
+            renderPatientCalendar();
+            renderPatientFeedback();
+        }
+
+        function renderProgramExercises() {
+            const html = currentPatient.exercises.map((ex, idx) => `
+                <div class="exercise-item">
+                    <div class="exercise-image">💪</div>
+                    <div class="exercise-content">
+                        <h3>${ex.name}</h3>
+                        <p>${ex.sets} x ${ex.reps} atkārtojumi</p>
+                        <div class="exercise-meta">
+                            <span>⏱ ${ex.duration} min</span>
+                            <span>📅 ${ex.days.join(', ')}</span>
+                            <span>✓ ${ex.completed} izpildīti</span>
+                            <span>✗ ${ex.missed} izlaisti</span>
+                        </div>
+                    </div>
+                    <button class="btn btn-secondary btn-small" onclick="removeExerciseFromProgram(${idx})">Dzēst</button>
+                </div>
+            `).join('');
+
+            document.getElementById('programExercises').innerHTML = html || '<p style="color: var(--text-light); text-align: center; padding: 20px;">Vēl nav pievienoti vingrojumi</p>';
+        }
+
+        function renderPainChart() {
+            const data = currentPatient.painHistory;
+            const maxPain = Math.max(...data, 10);
+            const weeks = currentPatient.weeks;
+
+            const html = data.map((pain, idx) => {
+                const height = (pain / maxPain) * 100;
+                return `
+                    <div class="bar" style="height: ${height}%; background: linear-gradient(to top, var(--teal), var(--light-teal));">
+                        <span class="bar-label">${weeks[idx]}</span>
+                    </div>
+                `;
+            }).join('');
+
+            document.getElementById('painChart').innerHTML = html;
+        }
+
+        function renderPatientCalendar() {
+            const days = ['Pom', 'Otr', 'Tre', 'Cet', 'Pie', 'Ses', 'Sve'];
+            const header = days.map(d => `<div class="calendar-day-header">${d}</div>`).join('');
+
+            const calendarDays = [];
+            for (let i = 1; i <= 28; i++) {
+                let status = 'upcoming';
+                if (i <= 20) status = i % 2 === 0 ? 'completed' : (i % 3 === 0 ? 'missed' : 'rest');
+
+                calendarDays.push(`<div class="calendar-day ${status}">${i}</div>`);
+            }
+
+            document.getElementById('patientCalendar').innerHTML = header + calendarDays.join('');
+        }
+
+        function renderPatientFeedback() {
+            const html = currentPatient.feedback.map(f => `
+                <div style="padding: 16px; background: var(--light-bg); border-radius: 8px; margin-bottom: 12px;">
+                    <div style="display: flex; justify-content: space-between; margin-bottom: 8px;">
+                        <strong>${f.date}</strong>
+                        <span class="badge badge-green">Sāpes: ${f.pain}/10</span>
+                    </div>
+                    <p style="color: var(--text-dark); line-height: 1.5;">${f.text}</p>
+                </div>
+            `).join('');
+
+            document.getElementById('patientFeedback').innerHTML = html;
+        }
+
+        function renderExercises() {
+            const html = demoData.exercises.map(ex => `
+                <div class="exercise-item">
+                    <div class="exercise-image">${ex.emoji}</div>
+                    <div class="exercise-content">
+                        <h3>${ex.name}</h3>
+                        <p>${ex.instructions}</p>
+                        <div class="exercise-meta">
+                            <span>📂 ${ex.category}</span>
+                            <span>🏥 ${ex.medicalTerms}</span>
+                        </div>
+                    </div>
+                </div>
+            `).join('');
+
+            document.getElementById('exercisesList').innerHTML = html;
+        }
+
+        function updatePatientGoal() {
+            currentPatient.goal = document.getElementById('patientGoal').value;
+            alert('✓ Mērķis atjaunināts!');
+        }
+
+        function saveProgram() {
+            currentPatient.program.name = document.getElementById('programName').value;
+            currentPatient.program.description = document.getElementById('programDescription').value;
+            alert('✓ Programma saglabāta!');
+        }
+
+        function removeExerciseFromProgram(idx) {
+            currentPatient.exercises.splice(idx, 1);
+            renderProgramExercises();
+        }
+
+        function addExerciseToProgram() {
+            const select = document.getElementById('selectExercise');
+            const exerciseId = select.value;
+            const exercise = demoData.exercises.find(e => e.id == exerciseId);
+
+            if (!exercise) {
+                alert('Lūdzu selectējiet vingrojumu!');
+                return;
+            }
+
+            const newExercise = {
+                id: exercise.id,
+                name: exercise.name,
+                reps: parseInt(document.getElementById('repetitions').value),
+                sets: parseInt(document.getElementById('sets').value),
+                duration: parseInt(document.getElementById('duration').value),
+                days: Array.from(document.querySelectorAll('#addExerciseModal input[type="checkbox"]:checked')).map(cb => cb.value),
+                completed: 0,
+                missed: 0
+            };
+
+            if (newExercise.days.length === 0) {
+                alert('Lūdzu selectējiet vismaz vienu dienu!');
+                return;
+            }
+
+            currentPatient.exercises.push(newExercise);
+            closeModal('addExerciseModal');
+            renderProgramExercises();
+            alert('✓ Vingrojums pievienots programmai!');
+        }
+
+        // PATIENT FUNCTIONS
+        function switchPatientSection(section) {
+            document.querySelectorAll('#patientContent .section').forEach(s => s.classList.remove('active'));
+
+            if (section === 'home') {
+                document.getElementById('patientHomeSection').classList.add('active');
+                renderPatientHome();
+            } else if (section === 'progress') {
+                document.getElementById('progressSection').classList.add('active');
+                renderPatientProgress();
+            } else if (section === 'exercises') {
+                document.getElementById('exercisesPatientSection').classList.add('active');
+                renderPatientExercises();
+            }
+        }
+
+        function renderPatientHome() {
+            // Weekly plan
+            const weekDays = ['Pom', 'Otr', 'Tre', 'Cet', 'Pie', 'Ses', 'Sve'];
+            const weekHtml = weekDays.map((day, idx) => {
+                const scheduled = currentPatient.exercises.some(ex => ex.days.includes(day));
+                return `
+                    <div style="padding: 12px; border-radius: 6px; background: ${scheduled ? 'rgba(74, 155, 168, 0.1)' : 'var(--light-bg)'}; text-align: center; cursor: pointer;">
+                        <div style="font-size: 18px; margin-bottom: 4px;">${scheduled ? '💪' : '😴'}</div>
+                        <div style="font-size: 12px; font-weight: 600; color: ${scheduled ? 'var(--teal)' : 'var(--text-light)'};">${day}</div>
+                        <div style="font-size: 11px; color: var(--text-light);">${scheduled ? 'Vingrojumi' : 'Atpūta'}</div>
+                    </div>
+                `;
+            }).join('');
+
+            document.getElementById('weeklyPlan').innerHTML = `<div style="display: grid; grid-template-columns: repeat(7, 1fr); gap: 8px;">${weekHtml}</div>`;
+
+            // Today's exercises
+            const today = new Date().toLocaleString('lv-LV', { weekday: 'short' });
+            const todayExercises = currentPatient.exercises.filter(ex => ex.days.some(d => d.toLowerCase().includes('pom')));
+            const todayHtml = todayExercises.length > 0 ? todayExercises.map(ex => `
+                <div class="exercise-item" onclick="viewPatientExercise(${ex.id})">
+                    <div class="exercise-image">💪</div>
+                    <div class="exercise-content">
+                        <h3>${ex.name}</h3>
+                        <div class="exercise-meta">
+                            <span>⏱ ${ex.duration} min</span>
+                            <span>${ex.sets} x ${ex.reps}</span>
+                        </div>
+                    </div>
+                    <span style="align-self: center; font-size: 24px;">→</span>
+                </div>
+            `).join('') : '<p style="text-align: center; color: var(--text-light); padding: 20px;">Šodien nav plānotu vingrojumu 😴</p>';
+
+            document.getElementById('todayExercises').innerHTML = todayHtml;
+
+            // Pain chart
+            const data = currentPatient.painHistory;
+            const maxPain = 10;
+            const weeks = currentPatient.weeks;
+            const chartHtml = data.map((pain, idx) => {
+                const height = (pain / maxPain) * 100;
+                return `
+                    <div class="bar" style="height: ${height}%; background: linear-gradient(to top, var(--teal), var(--light-teal));">
+                        <span class="bar-label">${weeks[idx]}</span>
+                    </div>
+                `;
+            }).join('');
+
+            document.getElementById('fullPainChart').innerHTML = chartHtml;
+        }
+
+        function renderPatientProgress() {
+            // Month calendar
+            const days = ['P', 'O', 'T', 'C', 'P', 'S', 'S'];
+            const header = days.map(d => `<div class="calendar-day-header">${d}</div>`).join('');
+
+            const calendarDays = [];
+            for (let i = 1; i <= 30; i++) {
+                let status = 'upcoming';
+                if (i <= 20) status = i % 2 === 0 ? 'completed' : (i % 3 === 0 ? 'missed' : 'rest');
+                calendarDays.push(`<div class="calendar-day ${status}">${i}</div>`);
+            }
+
+            document.getElementById('monthCalendar').innerHTML = header + calendarDays.join('');
+
+            // Progress notes
+            const notesHtml = `
+                <div style="padding: 12px; background: var(--light-bg); border-radius: 6px; margin-bottom: 12px;">
+                    <div style="font-weight: 600; margin-bottom: 8px;">👍 Jūs Pievienojāt Piezīmi</div>
+                    <textarea placeholder="Pievienojiet savu piezīmi par progresu..." style="width: 100%; min-height: 80px; padding: 10px; border: 1px solid var(--border-color); border-radius: 6px; margin-bottom: 8px;"></textarea>
+                    <button class="btn btn-primary" onclick="alert('Piezīme nosūtīta fizioterapeitam')">Nosūtīt Fizioterapeitam</button>
+                </div>
+                <div style="padding: 12px; background: var(--light-bg); border-radius: 6px;">
+                    <div style="font-weight: 600; margin-bottom: 8px;">💬 Fizioterapeita Piezīmes</div>
+                    <p style="color: var(--text-dark);">Jūs vienmērīgi veiciet vingrojumus un rīdiet. Turpinājiet tā! Nākamnedēļ palielināsim intensitāti.</p>
+                </div>
+            `;
+
+            document.getElementById('progressNotes').innerHTML = notesHtml;
+        }
+
+        function renderPatientExercises() {
+            const html = currentPatient.exercises.map(ex => {
+                const libExercise = demoData.exercises.find(e => e.id === ex.id);
+                return `
+                    <div class="exercise-item" onclick="viewPatientExercise(${ex.id})">
+                        <div class="exercise-image">${libExercise.emoji}</div>
+                        <div class="exercise-content">
+                            <h3>${ex.name}</h3>
+                            <div class="exercise-meta">
+                                <span>📅 ${ex.days.join(', ')}</span>
+                                <span>💪 ${ex.sets}x${ex.reps}</span>
+                                <span>✓ ${ex.completed}/${ex.completed + ex.missed}</span>
+                            </div>
+                        </div>
+                        <span style="align-self: center; font-size: 24px;">→</span>
+                    </div>
+                `;
+            }).join('');
+
+            document.getElementById('patientExercisesList').innerHTML = html;
+        }
+
+        function viewPatientExercise(id) {
+            const exercise = demoData.exercises.find(e => e.id === id);
+            const programEx = currentPatient.exercises.find(e => e.id === id);
+
+            currentExercise = { ...exercise, ...programEx };
+
+            document.getElementById('exerciseTitle').textContent = exercise.name;
+            document.getElementById('exerciseInstructions').textContent = exercise.instructions;
+            document.getElementById('exerciseTip').textContent = exercise.tip;
+            document.getElementById('exerciseDemo').textContent = exercise.emoji;
+
+            // Pain scale
+            const painHtml = Array.from({ length: 11 }, (_, i) => `
+                <div class="pain-level" onclick="selectPain(${i})">${i}</div>
+            `).join('');
+            document.getElementById('painScaleInput').innerHTML = painHtml;
+
+            switchPatientSection('exercise-detail');
+        }
+
+        function selectPain(level) {
+            document.querySelectorAll('.pain-level').forEach(el => el.classList.remove('selected'));
+            event.target.classList.add('selected');
+        }
+
+        function submitExerciseCompletion() {
+            const pain = document.querySelector('.pain-level.selected')?.textContent || null;
+            const feedback = document.getElementById('exerciseFeedback').value;
+
+            if (!pain) {
+                alert('Lūdzu selectējiet sāpju līmeni!');
+                return;
+            }
+
+            currentPatient.feedback.unshift({
+                date: new Date().toISOString().split('T')[0],
+                text: feedback || 'Vingrojums paveikts',
+                pain: parseInt(pain)
+            });
+
+            const feedback_item = currentPatient.feedback[0];
+            if (feedback_item.pain < currentPatient.currentPain) {
+                currentPatient.currentPain = feedback_item.pain;
+            }
+
+            currentPatient.exercises.find(e => e.id === currentExercise.id).completed++;
+
+            alert('✓ Vingrojums atzīmēts kā paveikts! Labi darīts!');
+            document.getElementById('exerciseFeedback').value = '';
+            switchPatientSection('exercises');
+        }
+
+        // MODAL FUNCTIONS
+        function openAddPatientModal() {
+            document.getElementById('addPatientModal').classList.add('active');
+        }
+
+        function openCreateExerciseModal() {
+            document.getElementById('createExerciseModal').classList.add('active');
+        }
+
+        function openAddExerciseModal() {
+            const html = demoData.exercises.map(ex => `<option value="${ex.id}">${ex.name}</option>`).join('');
+            document.getElementById('selectExercise').innerHTML = html;
+            document.getElementById('addExerciseModal').classList.add('active');
+        }
+
+        function closeModal(modalId) {
+            document.getElementById(modalId).classList.remove('active');
+        }
+
+        function addPatient() {
+            const name = document.getElementById('newPatientName').value;
+            const email = document.getElementById('newPatientEmail').value;
+            const phone = document.getElementById('newPatientPhone').value;
+            const goal = document.getElementById('newPatientGoal').value;
+
+            if (!name || !email || !goal) {
+                alert('Lūdzu aizpildiet visus laukus!');
+                return;
+            }
+
+            const newPatient = {
+                id: demoData.patients.length + 1,
+                name,
+                email,
+                phone,
+                goal,
+                initialPain: 7,
+                currentPain: 7,
+                avatar: name.split(' ').map(n => n[0]).join(''),
+                startDate: new Date().toISOString().split('T')[0],
+                program: { name: "Jauna Programma", description: "" },
+                exercises: [],
+                painHistory: [7],
+                weeks: ["1. ned."],
+                feedback: []
+            };
+
+            demoData.patients.push(newPatient);
+            closeModal('addPatientModal');
+            renderPatientsList();
+
+            document.getElementById('newPatientName').value = '';
+            document.getElementById('newPatientEmail').value = '';
+            document.getElementById('newPatientPhone').value = '';
+            document.getElementById('newPatientGoal').value = '';
+
+            alert('✓ Pacients pievienots!');
+        }
+
+        function createExercise() {
+            const name = document.getElementById('exerciseName').value;
+            const instructions = document.getElementById('exercisePatientInstructions').value;
+            const medicalTerms = document.getElementById('exerciseMedicalTerms').value;
+            const tip = document.getElementById('exerciseTipInput').value;
+            const category = document.getElementById('exerciseCategory').value;
+
+            if (!name || !instructions) {
+                alert('Lūdzu aizpildiet nosaukumu un instrukcijas!');
+                return;
+            }
+
+            const newExercise = {
+                id: demoData.exercises.length + 1,
+                name,
+                instructions,
+                medicalTerms,
+                tip,
+                category,
+                emoji: "💪"
+            };
+
+            demoData.exercises.push(newExercise);
+            closeModal('createExerciseModal');
+            renderExercises();
+
+            document.getElementById('exerciseName').value = '';
+            document.getElementById('exercisePatientInstructions').value = '';
+            document.getElementById('exerciseMedicalTerms').value = '';
+            document.getElementById('exerciseTipInput').value = '';
+
+            alert('✓ Vingrojums izveidots!');
+        }
+
+        // INIT
+        document.addEventListener('DOMContentLoaded', () => {
+            renderPatientsList();
+        });
+    </script>
+</body>
+</html>
