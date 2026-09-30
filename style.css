@@ -61,69 +61,31 @@ form {
   gap: 12px;
 }
 
-.options-list li {
-  margin: 0;
-}
-
-.options-list label {
+.options-list label.answer-button {
   display: flex;
   align-items: center;
+  background: rgba(255, 255, 255, 0.05);
+  border: 2px solid rgba(0, 188, 212, 0.3);
+  border-radius: 8px;
+  padding: 12px;
   cursor: pointer;
   transition: all 0.3s ease;
+  overflow: hidden;
+}
+
+.options-list label.answer-button:hover {
+  background: rgba(255, 255, 255, 0.1);
+  border-color: rgba(0, 188, 212, 0.6);
+  transform: translateX(5px);
 }
 
 .options-list input[type="radio"] {
   appearance: none;
-  width: 24px;
-  height: 24px;
-  border: 2px solid #00BCD4;
-  border-radius: 50%;
-  margin-right: 15px;
-  cursor: pointer;
-  transition: all 0.3s ease;
-  flex-shrink: 0;
-}
-
-.options-list input[type="radio"]:hover {
-  box-shadow: 0 0 15px rgba(0, 188, 212, 0.6);
-  border-color: #00FFFF;
-}
-
-.options-list input[type="radio"]:checked {
-  background: #00BCD4;
-  box-shadow: 0 0 20px rgba(0, 188, 212, 0.8);
-  border-color: #00FFFF;
-}
-
-.options-list label span {
-  color: white;
-  font-size: 16px;
-  transition: color 0.3s ease;
-}
-
-.options-list label:hover span {
-  color: #00BCD4;
-}
-
-.options-list input[type="radio"]:checked + span {
-  color: #00FFFF;
-  font-weight: 600;
-}
-
-/* Angled Answer Style (optional premium version) */
-.answer-box {
-  display: flex;
-  align-items: center;
-  background: rgba(255, 255, 255, 0.05);
-  border-radius: 8px;
-  overflow: hidden;
-  transition: all 0.3s ease;
-  border: 1px solid rgba(0, 188, 212, 0.2);
-}
-
-.answer-box:hover {
-  background: rgba(255, 255, 255, 0.1);
-  border-color: rgba(0, 188, 212, 0.5);
+  width: 0;
+  height: 0;
+  margin: 0;
+  padding: 0;
+  display: none;
 }
 
 .answer-letter {
@@ -138,14 +100,34 @@ form {
   font-weight: bold;
   color: white;
   transform: skewX(-15deg);
+  margin-right: 15px;
+  border-radius: 4px;
+  transition: all 0.3s ease;
 }
 
 .answer-text {
   flex: 1;
-  padding: 0 20px;
   color: white;
   font-size: 15px;
+  transition: color 0.3s ease;
 }
+
+.options-list input[type="radio"]:checked + .answer-letter {
+  background: linear-gradient(135deg, #00FFFF 0%, #00BCD4 100%);
+  box-shadow: 0 0 20px rgba(0, 188, 212, 0.8);
+  transform: skewX(-15deg) scale(1.05);
+}
+
+.options-list input[type="radio"]:checked + .answer-letter + .answer-text {
+  color: #00FFFF;
+  font-weight: 600;
+}
+
+.options-list label.answer-button:has(input:checked) {
+  background: rgba(0, 188, 212, 0.15);
+  border-color: rgba(0, 188, 212, 0.8);
+}
+
 
 button[type="submit"] {
   width: 100%;
