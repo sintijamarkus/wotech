@@ -1,0 +1,281 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Your Car Profile - Quiz Results</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            background: linear-gradient(135deg, #ff006e 0%, #8338ec 35%, #3a86ff 100%);
+            min-height: 100vh;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            padding: 20px;
+        }
+
+        .container {
+            width: 100%;
+            max-width: 1000px;
+        }
+
+        .results-card {
+            background: rgba(20, 20, 50, 0.7);
+            border: 2px solid rgba(255, 0, 110, 0.5);
+            border-radius: 20px;
+            padding: 50px;
+            backdrop-filter: blur(10px);
+            box-shadow: 0 0 40px rgba(255, 0, 110, 0.3);
+        }
+
+        .results-header {
+            text-align: center;
+            margin-bottom: 40px;
+            color: white;
+        }
+
+        .letter-badge {
+            display: inline-flex;
+            align-items: center;
+            justify-content: center;
+            width: 80px;
+            height: 80px;
+            background: linear-gradient(135deg, #ff006e, #ffbe0b);
+            border-radius: 50%;
+            font-size: 48px;
+            font-weight: 900;
+            color: white;
+            margin-bottom: 20px;
+            box-shadow: 0 0 30px rgba(255, 0, 110, 0.5);
+        }
+
+        .car-model {
+            font-size: 32px;
+            font-weight: 700;
+            color: white;
+            margin-bottom: 10px;
+        }
+
+        .car-tagline {
+            font-size: 18px;
+            color: #ffbe0b;
+            font-style: italic;
+        }
+
+        .results-content {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 40px;
+            align-items: center;
+            margin-bottom: 40px;
+        }
+
+        .car-image-section {
+            text-align: center;
+        }
+
+        .car-image-placeholder {
+            width: 100%;
+            aspect-ratio: 4/3;
+            background: rgba(255, 255, 255, 0.1);
+            border: 2px dashed rgba(255, 255, 255, 0.3);
+            border-radius: 15px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 18px;
+            color: rgba(255, 255, 255, 0.5);
+            margin-bottom: 20px;
+        }
+
+        .car-image-label {
+            font-size: 14px;
+            color: rgba(255, 255, 255, 0.6);
+        }
+
+        .description-section {
+            display: flex;
+            flex-direction: column;
+            gap: 20px;
+        }
+
+        .description-text {
+            font-size: 16px;
+            line-height: 1.8;
+            color: rgba(255, 255, 255, 0.9);
+            background: rgba(255, 255, 255, 0.05);
+            padding: 25px;
+            border-left: 4px solid #ffbe0b;
+            border-radius: 8px;
+        }
+
+        .personality-traits {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(150px, 1fr));
+            gap: 10px;
+        }
+
+        .trait-tag {
+            background: rgba(255, 190, 11, 0.2);
+            border: 1px solid #ffbe0b;
+            color: #ffbe0b;
+            padding: 10px 15px;
+            border-radius: 20px;
+            font-size: 13px;
+            text-align: center;
+            font-weight: 500;
+        }
+
+        .action-buttons {
+            display: flex;
+            gap: 15px;
+            justify-content: center;
+            margin-top: 30px;
+        }
+
+        .btn {
+            padding: 14px 30px;
+            font-size: 14px;
+            font-weight: 700;
+            text-transform: uppercase;
+            letter-spacing: 1px;
+            border: none;
+            border-radius: 10px;
+            cursor: pointer;
+            transition: all 0.3s ease;
+        }
+
+        .btn-primary {
+            background: linear-gradient(135deg, #ff006e, #8338ec);
+            color: white;
+            box-shadow: 0 0 20px rgba(255, 0, 110, 0.4);
+        }
+
+        .btn-primary:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 0 30px rgba(255, 0, 110, 0.6);
+        }
+
+        .btn-secondary {
+            background: transparent;
+            color: white;
+            border: 2px solid rgba(255, 255, 255, 0.3);
+        }
+
+        .btn-secondary:hover {
+            border-color: rgba(255, 255, 255, 0.6);
+            background: rgba(255, 255, 255, 0.05);
+        }
+
+        .trait-label {
+            font-size: 12px;
+            text-transform: uppercase;
+            color: rgba(255, 255, 255, 0.6);
+            margin-bottom: 10px;
+            letter-spacing: 1px;
+        }
+
+        @media (max-width: 768px) {
+            .results-card {
+                padding: 30px 20px;
+            }
+
+            .results-content {
+                grid-template-columns: 1fr;
+                gap: 30px;
+            }
+
+            .car-model {
+                font-size: 24px;
+            }
+
+            .letter-badge {
+                width: 60px;
+                height: 60px;
+                font-size: 36px;
+            }
+
+            .action-buttons {
+                flex-direction: column;
+            }
+
+            .btn {
+                width: 100%;
+            }
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <div class="results-card">
+            <!-- Header with car letter badge -->
+            <div class="results-header">
+                <div class="letter-badge">A</div>
+                <div class="car-model">Porsche 911</div>
+                <div class="car-tagline">Fast & Thrilling</div>
+            </div>
+
+            <!-- Main content: Image + Description -->
+            <div class="results-content">
+                <!-- Car Image Section -->
+                <div class="car-image-section">
+                    <div class="car-image-placeholder">
+                        [Car Image Here]<br>
+                        <small>Upload car visual</small>
+                    </div>
+                    <div class="car-image-label">Your Personality Car</div>
+                </div>
+
+                <!-- Description Section -->
+                <div class="description-section">
+                    <div class="description-text">
+                        You're the type of person who lives for adrenaline and precision. Speed, luxury, and performance aren't just features to you—they're a lifestyle. You appreciate fine craftsmanship and attention to detail in everything you do. With an eye for excellence and a competitive spirit, you always aim for the top. You're not afraid to take risks and embrace challenges head-on. Life is your racetrack, and you're determined to make every moment count.
+                    </div>
+
+                    <!-- Personality Traits -->
+                    <div>
+                        <div class="trait-label">Your Personality Traits</div>
+                        <div class="personality-traits">
+                            <div class="trait-tag">Ambitious</div>
+                            <div class="trait-tag">Performance-driven</div>
+                            <div class="trait-tag">Competitive</div>
+                            <div class="trait-tag">Risk-taker</div>
+                            <div class="trait-tag">Precision-focused</div>
+                            <div class="trait-tag">Thrill-seeker</div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Action Buttons -->
+            <div class="action-buttons">
+                <button class="btn btn-primary">Try Again</button>
+                <button class="btn btn-secondary">Share Result</button>
+            </div>
+        </div>
+    </div>
+
+    <script>
+        // Example of how to populate results from car-descriptions.json
+        const carData = {
+            letter: "A",
+            model: "Porsche 911",
+            tagline: "Fast & Thrilling",
+            description: "You're the type of person who lives for adrenaline...",
+            traits: ["Ambitious", "Performance-driven", "Competitive", "Risk-taker", "Precision-focused", "Thrill-seeker"]
+        };
+
+        // Populate with JavaScript if needed
+        // document.querySelector('.letter-badge').textContent = carData.letter;
+        // document.querySelector('.car-model').textContent = carData.model;
+        // etc.
+    </script>
+</body>
+</html>

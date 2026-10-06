@@ -1,0 +1,106 @@
+{
+  "cars": [
+    {
+      "id": "porsche911",
+      "letter": "A",
+      "model": "Porsche 911",
+      "tagline": "Fast & Thrilling",
+      "shortDescription": "You are a Porsche 911 driver",
+      "longDescription": "You're the type of person who lives for adrenaline and precision. Speed, luxury, and performance aren't just features to you—they're a lifestyle. You appreciate fine craftsmanship and attention to detail in everything you do. With an eye for excellence and a competitive spirit, you always aim for the top. You're not afraid to take risks and embrace challenges head-on. Life is your racetrack, and you're determined to make every moment count.",
+      "personality": [
+        "Ambitious and goal-oriented",
+        "Loves performance and speed",
+        "Appreciates luxury and quality",
+        "Competitive spirit",
+        "Takes calculated risks",
+        "Precision-focused",
+        "Thrives on adrenaline"
+      ]
+    },
+    {
+      "id": "volvo-xc90",
+      "letter": "B",
+      "model": "Volvo XC90",
+      "tagline": "Safe & Reliable",
+      "shortDescription": "You are a Volvo XC90 driver",
+      "longDescription": "You prioritize safety, comfort, and reliability above all else. You're the responsible one—the person your family and friends turn to when they need dependable advice. You value stability and long-term thinking over flashy trends. Your home is your sanctuary, and your loved ones are your priority. You make practical decisions, plan ahead, and believe that a good car should last for years without drama. You're humble, honest, and believe that true luxury is peace of mind and the wellbeing of those you care about.",
+      "personality": [
+        "Family-oriented",
+        "Responsible and dependable",
+        "Values safety and comfort",
+        "Practical decision-maker",
+        "Long-term planner",
+        "Humble and honest",
+        "Prioritizes wellbeing"
+      ]
+    },
+    {
+      "id": "horse",
+      "letter": "C",
+      "model": "Horse",
+      "tagline": "Classic & Free",
+      "shortDescription": "You are a Horse",
+      "longDescription": "You're a free spirit who doesn't follow the crowd. Unconventional is your middle name, and you're perfectly comfortable being different. You value freedom, independence, and authenticity over material possessions. Rules? Suggestions. Society's expectations? Not your concern. You appreciate the simple things in life and have a deep connection to nature and tradition. Whether you're exploring new ideas or old paths, you do it on your own terms. You're the kind of person who inspires others to think differently and embrace their true selves.",
+      "personality": [
+        "Independent thinker",
+        "Non-conformist",
+        "Values freedom",
+        "Authentic and genuine",
+        "Connected to nature",
+        "Unconventional approach",
+        "Inspires others"
+      ]
+    },
+    {
+      "id": "cybertruck",
+      "letter": "D",
+      "model": "Cybertruck",
+      "tagline": "Futuristic & Bold",
+      "shortDescription": "You are a Cybertruck driver",
+      "longDescription": "You're a visionary who sees possibilities where others see obstacles. You're drawn to cutting-edge technology and bold, unconventional designs. You don't just follow trends—you set them. Innovation, sustainability, and disruption excite you. You're confident enough to stand out and make a statement with your choices. Whether it's in technology, business, or life philosophy, you're always thinking several steps ahead. You believe the future should be different, better, and more sustainable. You're not afraid to challenge the status quo and pioneer new paths.",
+      "personality": [
+        "Visionary and innovative",
+        "Tech-savvy",
+        "Bold and daring",
+        "Future-focused",
+        "Trend-setter",
+        "Sustainability-minded",
+        "Challenges the status quo"
+      ]
+    },
+    {
+      "id": "jeep-wrangler",
+      "letter": "E",
+      "model": "Jeep Wrangler",
+      "tagline": "Adventure & Tough",
+      "shortDescription": "You are a Jeep Wrangler driver",
+      "longDescription": "You're an adventurer at heart who thrives in the great outdoors. Obstacles are just opportunities for a good story. You're rugged, resilient, and always ready for the next challenge, whether it's a mountain trail or a life hurdle. You value experiences over possessions and believe the best memories come from unexpected adventures. You're the friend everyone wants on their road trip—practical, capable, and up for anything. You're not afraid to get dirty, take the road less traveled, or venture into unknown territory. Your spirit is untamed, and your outlook on life is refreshingly bold.",
+      "personality": [
+        "Adventurous spirit",
+        "Outdoors enthusiast",
+        "Resilient and tough",
+        "Experience-focused",
+        "Capable and practical",
+        "Embraces challenges",
+        "Untamed spirit"
+      ]
+    },
+    {
+      "id": "lada",
+      "letter": "F",
+      "model": "Lada 2105",
+      "tagline": "Retro Soviet Legend",
+      "shortDescription": "You are a Lada 2105 driver",
+      "longDescription": "You're nostalgic, practical, and proud of your heritage. You don't need fancy features or the latest technology—what matters is that it works and has history behind it. You appreciate craftsmanship from a different era and have a deep respect for the past. You're resourceful and can fix things yourself, adapting and improvising when necessary. You value authenticity and substance over superficial glamour. Whether you're a collector of vintage things or simply someone who believes 'they don't make them like they used to,' you see beauty in simplicity and durability. You're connected to your roots and proud of where you come from.",
+      "personality": [
+        "Nostalgic and sentimental",
+        "Practical and resourceful",
+        "Heritage-proud",
+        "Appreciates authenticity",
+        "Values durability",
+        "DIY-oriented",
+        "Connected to roots"
+      ]
+    }
+  ]
+}
