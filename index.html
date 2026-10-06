@@ -88,13 +88,6 @@
             margin-bottom: 30px;
         }
 
-        /* Show 5th item in a row by itself, centered */
-        .answers-grid .answer-option:nth-child(5) {
-            grid-column: 1 / -1;
-            max-width: calc(50% - 10px);
-            margin: 0 auto;
-        }
-
         .answer-option {
             position: relative;
             overflow: hidden;
@@ -216,6 +209,27 @@
             font-weight: 500;
         }
 
+        .answer-subtext {
+            font-size: 12px;
+            color: rgba(255, 255, 255, 0.7);
+            margin-top: 2px;
+        }
+
+        /* Soviet car option styling */
+        .answer-option:nth-child(6) .answer-label {
+            border-left-color: #ff0040;
+        }
+
+        .answer-option:nth-child(6) input[type="radio"]:checked + .answer-label {
+            box-shadow: 0 0 20px rgba(255, 0, 64, 0.6),
+                        inset 0 0 20px rgba(255, 0, 64, 0.2);
+        }
+
+        .answer-option:nth-child(6) .answer-letter {
+            background: rgba(255, 0, 64, 0.3);
+            color: #ff0040;
+        }
+
         .submit-btn {
             width: 100%;
             padding: 16px 32px;
@@ -265,9 +279,6 @@
                 gap: 15px;
             }
 
-            .answers-grid .answer-option:nth-child(5) {
-                max-width: 100%;
-            }
 
             .logo {
                 font-size: 20px;
@@ -292,18 +303,24 @@
 
                 <div class="answers-grid">
                     <div class="answer-option">
-                        <input type="radio" id="option-a" name="car" value="porsche" required>
+                        <input type="radio" id="option-a" name="car" value="porsche911" required>
                         <label for="option-a" class="answer-label">
                             <span class="answer-letter">A</span>
-                            <span class="answer-text">Sports Car - Porsche</span>
+                            <div>
+                                <span class="answer-text">Porsche 911</span>
+                                <div class="answer-subtext">Fast & Thrilling</div>
+                            </div>
                         </label>
                     </div>
 
                     <div class="answer-option">
-                        <input type="radio" id="option-b" name="car" value="volvo">
+                        <input type="radio" id="option-b" name="car" value="volvo-xc90">
                         <label for="option-b" class="answer-label">
                             <span class="answer-letter">B</span>
-                            <span class="answer-text">Family Car - Volvo</span>
+                            <div>
+                                <span class="answer-text">Volvo XC90</span>
+                                <div class="answer-subtext">Safe & Reliable</div>
+                            </div>
                         </label>
                     </div>
 
@@ -311,7 +328,10 @@
                         <input type="radio" id="option-c" name="car" value="horse">
                         <label for="option-c" class="answer-label">
                             <span class="answer-letter">C</span>
-                            <span class="answer-text">Horse</span>
+                            <div>
+                                <span class="answer-text">Horse</span>
+                                <div class="answer-subtext">Classic & Free</div>
+                            </div>
                         </label>
                     </div>
 
@@ -319,15 +339,32 @@
                         <input type="radio" id="option-d" name="car" value="cybertruck">
                         <label for="option-d" class="answer-label">
                             <span class="answer-letter">D</span>
-                            <span class="answer-text">Cybertruck</span>
+                            <div>
+                                <span class="answer-text">Cybertruck</span>
+                                <div class="answer-subtext">Futuristic & Bold</div>
+                            </div>
                         </label>
                     </div>
 
                     <div class="answer-option">
-                        <input type="radio" id="option-e" name="car" value="jeep">
+                        <input type="radio" id="option-e" name="car" value="jeep-wrangler">
                         <label for="option-e" class="answer-label">
                             <span class="answer-letter">E</span>
-                            <span class="answer-text">Off-road Vehicle - Jeep</span>
+                            <div>
+                                <span class="answer-text">Jeep Wrangler</span>
+                                <div class="answer-subtext">Adventure & Tough</div>
+                            </div>
+                        </label>
+                    </div>
+
+                    <div class="answer-option">
+                        <input type="radio" id="option-f" name="car" value="lada">
+                        <label for="option-f" class="answer-label">
+                            <span class="answer-letter">F</span>
+                            <div>
+                                <span class="answer-text">Lada 2105</span>
+                                <div class="answer-subtext">Retro Soviet Legend</div>
+                            </div>
                         </label>
                     </div>
                 </div>
