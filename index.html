@@ -88,6 +88,13 @@
             margin-bottom: 30px;
         }
 
+        /* Show 5th item in a row by itself, centered */
+        .answers-grid .answer-option:nth-child(5) {
+            grid-column: 1 / -1;
+            max-width: calc(50% - 10px);
+            margin: 0 auto;
+        }
+
         .answer-option {
             position: relative;
             overflow: hidden;
@@ -188,6 +195,21 @@
             color: #ffbe0b;
         }
 
+        /* Off-road vehicle option styling */
+        .answer-option:nth-child(5) .answer-label {
+            border-left-color: #06ffa5;
+        }
+
+        .answer-option:nth-child(5) input[type="radio"]:checked + .answer-label {
+            box-shadow: 0 0 20px rgba(6, 255, 165, 0.6),
+                        inset 0 0 20px rgba(6, 255, 165, 0.2);
+        }
+
+        .answer-option:nth-child(5) .answer-letter {
+            background: rgba(6, 255, 165, 0.3);
+            color: #06ffa5;
+        }
+
         .answer-text {
             color: white;
             font-size: 16px;
@@ -243,6 +265,10 @@
                 gap: 15px;
             }
 
+            .answers-grid .answer-option:nth-child(5) {
+                max-width: 100%;
+            }
+
             .logo {
                 font-size: 20px;
             }
@@ -294,6 +320,14 @@
                         <label for="option-d" class="answer-label">
                             <span class="answer-letter">D</span>
                             <span class="answer-text">Cybertruck</span>
+                        </label>
+                    </div>
+
+                    <div class="answer-option">
+                        <input type="radio" id="option-e" name="car" value="jeep">
+                        <label for="option-e" class="answer-label">
+                            <span class="answer-letter">E</span>
+                            <span class="answer-text">Off-road Vehicle - Jeep</span>
                         </label>
                     </div>
                 </div>
