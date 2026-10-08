@@ -72,6 +72,7 @@ def format_report(name, scores, average, grade):
 
 
 def main():
+    print("Scale: A/B/C/D with +/- modifiers, F has no modifier")
     header = (
         f"{'Name':<8} {'Scores':<22} {'Low':>5} {'High':>5} "
         f"{'Average':>8} {'Grade':>6}"
