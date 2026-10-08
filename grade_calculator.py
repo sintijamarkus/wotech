@@ -38,17 +38,28 @@ def calculate_weighted_average(scores, weights):
 
 
 def get_letter_grade(average):
-    """Map a numeric average to a letter grade."""
+    """Map a numeric average to a letter grade with +/- modifiers."""
     if average >= 90:
-        return "A"
+        letter = "A"
     elif average >= 80:
-        return "B"
+        letter = "B"
     elif average >= 70:
-        return "C"
+        letter = "C"
     elif average >= 60:
-        return "D"
+        letter = "D"
     else:
         return "F"
+    return letter + get_modifier(average)
+
+
+def get_modifier(average):
+    """Return "+" for the top of a band, "-" for the bottom, else ""."""
+    position = min(average, 99.99) % 10
+    if position >= 7:
+        return "+"
+    if position < 3:
+        return "-"
+    return ""
 
 
 def format_report(name, scores, average, grade):
