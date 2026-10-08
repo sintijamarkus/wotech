@@ -48,6 +48,8 @@ def main():
         avg = calculate_average(scores)
         grade = get_letter_grade(int(avg))
         print(format_report(name, scores, avg, grade))
+    print('-' * len(header))
+    print('Students: %d' % len(STUDENTS))
 
 
 if __name__ == "__main__":
