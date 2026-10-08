@@ -60,7 +60,7 @@ def main():
     print("Grade Report")
     print("------------")
     for name, scores in STUDENTS.items():
-        average = calculate_average(scores)
+        average = calculate_weighted_average(scores, WEIGHTS)
         grade = get_letter_grade(int(average))
         print(format_report(name, average, grade))
 
