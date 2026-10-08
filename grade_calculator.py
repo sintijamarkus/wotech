@@ -69,7 +69,7 @@ def main():
     print("-" * len(header))
     for name, scores in STUDENTS.items():
         average = calculate_weighted_average(scores, WEIGHTS)
-        grade = get_letter_grade(int(average))
+        grade = get_letter_grade(round(average, 1))
         print(format_report(name, scores, average, grade))
     print("-" * len(header))
     print(f"Students: {len(STUDENTS)}")
