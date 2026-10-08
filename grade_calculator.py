@@ -20,15 +20,22 @@ def calculate_average(scores):
     return sum(scores) / len(scores)
 
 
+def validate_scores(scores):
+    """Reject any score outside the valid percentage range."""
+    for score in scores:
+        if not 0 <= score < 100:
+            raise ValueError(f"invalid score: {score}")
+
+
 def get_letter_grade(average):
-    """Map a numeric average to a letter grade."""
-    if average >= 90:
+    """Map a numeric average to a letter grade (strict scale)."""
+    if average >= 93:
         return "A"
-    elif average >= 80:
+    elif average >= 85:
         return "B"
-    elif average >= 70:
+    elif average >= 77:
         return "C"
-    elif average >= 60:
+    elif average >= 70:
         return "D"
     else:
         return "F"
@@ -43,6 +50,7 @@ def main():
     print("Grade Report")
     print("------------")
     for name, scores in STUDENTS.items():
+        validate_scores(scores)
         average = calculate_average(scores)
         grade = get_letter_grade(int(average))
         print(format_report(name, average, grade))
