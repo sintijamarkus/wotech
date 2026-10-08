@@ -54,3 +54,62 @@ Pass/fail for the CLI (Step 5): **pass** = `python grade_calculator.py` exits 0,
 traceback, no debug lines, every student row present, the grade matches the displayed
 average under the active scale. **Fail** = traceback, non-zero exit, stray debug output,
 or a grade that contradicts the shown average.
+
+## 3. Execution log (Step 4) — plan vs. reality
+
+| # | Command(s) | Predicted | Actual | Resolution |
+|---|---|---|---|---|
+| 1 | `git merge --no-ff feature/weighted-average` | no conflict | no conflict | — |
+| 2 | `git merge --no-ff feature/detailed-output` | conflict in `main()` | ✅ conflict in `main()` loop (`average = calculate_weighted_average` vs `avg = calculate_average`, new `format_report` signature) | kept weighted calc + detailed table, converted contractor style to snake_case/f-strings |
+| 3a | `git cherry-pick -n fix/rounding-bug` (debug commit) → `git restore --source=HEAD --staged --worktree grade_calculator.py` → `git cherry-pick --quit` | debug commit unwanted | conflicted *and* only adds `DEBUG` prints | discarded, nothing committed |
+| 3b | `git cherry-pick -x fix/rounding-bug~1` | conflict on the `grade =` line | ✅ conflict | applied `round(average, 1)` to the weighted/detailed loop |
+| 4 | `git merge --no-ff feature/strict-grading` | conflict in loop body | ✅ conflict in loop body **and** next to `calculate_weighted_average()` (not predicted) | kept both functions; runtime then failed: `ValueError: invalid score: 100` |
+| 4b | `git revert -m 1 <strict-merge>` | revert if it regresses | regression confirmed | reverted; `git diff HEAD~2 HEAD` is empty → exact restore |
+| 5 | `git checkout feature/plus-minus-grades && git rebase release-plan` | conflict in header | ✅ commit 2 conflicted (old `Grade Report` banner no longer exists); commit 1 applied cleanly | print scale line above new table header, `git rebase --continue` |
+| 5b | `git checkout release-plan && git merge --ff-only feature/plus-minus-grades` | fast-forward | fast-forward | linear history, no merge commit |
+
+## 4. Validation (Step 5)
+
+`python grade_calculator.py` was run after every step:
+
+| After step | Alice | Bob | Charlie | Diana | Evan | Exit | Result |
+|---|---|---|---|---|---|---|---|
+| `dev` baseline | 89.8 B | 72.5 C | 60.0 D | 90.0 **B** ✗ | 80.0 C | 0 | rounding bug |
+| 1 weighted-average | 88.7 B | 72.5 C | 61.1 D | 90.1 A | 80.0 **C** ✗ | 0 | pass (bug still present) |
+| 2 detailed-output | 88.7 B | 72.5 C | 61.1 D | 90.1 A | 80.0 C ✗ | 0 | pass, table + footer |
+| 3 rounding fix | 88.7 B | 72.5 C | 61.1 D | 90.1 A | 80.0 **B** ✓ | 0 | pass, no DEBUG lines |
+| 4 strict-grading | — | — | — | — | — | **1** | **FAIL** `ValueError: invalid score: 100` |
+| 4b revert | 88.7 B | 72.5 C | 61.1 D | 90.1 A | 80.0 B | 0 | pass (identical to step 3) |
+| 5 plus-minus (final) | 88.7 B+ | 72.5 C- | 61.1 D- | 90.1 A- | 80.0 B- | 0 | **pass** |
+
+Final `release-plan` output:
+
+```
+Scale: A/B/C/D with +/- modifiers, F has no modifier
+Name     Scores                   Low  High  Average  Grade
+-----------------------------------------------------------
+Alice    92, 88, 100, 79           79   100     88.7     B+
+Bob      75, 64, 81, 70            64    81     72.5     C-
+Charlie  58, 62, 49, 71            49    71     61.1     D-
+Diana    89.5, 90, 89.4, 91      89.4    91     90.1     A-
+Evan     80, 79.8, 80, 80        79.8    80     80.0     B-
+-----------------------------------------------------------
+Students: 5
+```
+
+## 5. Final status (Step 6)
+
+| Branch | Outcome |
+|---|---|
+| `feature/weighted-average` | ✅ shipped (merge commit) |
+| `feature/detailed-output` | ✅ shipped (merge commit, conflict resolved, style normalised) |
+| `fix/rounding-bug` | ✅ fix shipped via `cherry-pick -x`; debug commit discarded |
+| `feature/strict-grading` | ❌ rejected — merged, failed validation, reverted with `git revert -m 1`; branch left isolated |
+| `feature/plus-minus-grades` | ✅ shipped via rebase + fast-forward (linear history) |
+
+`release-plan` is **not** merged into `main`; reviewers check it out directly:
+
+```bash
+git fetch origin && git checkout release-plan && python grade_calculator.py
+git log --oneline --graph dev..release-plan
+```
