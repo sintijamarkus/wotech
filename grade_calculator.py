@@ -34,18 +34,20 @@ def get_letter_grade(average):
         return "F"
 
 
-def format_report(name, average, grade):
-    """Build a one-line report for a student."""
-    return f"{name}: {average:.1f} ({grade})"
+def format_report(name, scores, avg, grade):
+    """Build a detailed table row: scores, low, high, average and grade."""
+    scoreList = ", ".join('%g' % s for s in scores)
+    return '%-8s %-22s %5g %5g %8.1f %6s' % (name, scoreList, min(scores), max(scores), avg, grade)
 
 
 def main():
-    print("Grade Report")
-    print("------------")
+    header = '%-8s %-22s %5s %5s %8s %6s' % ('Name', 'Scores', 'Low', 'High', 'Average', 'Grade')
+    print(header)
+    print('-' * len(header))
     for name, scores in STUDENTS.items():
-        average = calculate_average(scores)
-        grade = get_letter_grade(int(average))
-        print(format_report(name, average, grade))
+        avg = calculate_average(scores)
+        grade = get_letter_grade(int(avg))
+        print(format_report(name, scores, avg, grade))
 
 
 if __name__ == "__main__":
