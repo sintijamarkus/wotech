@@ -51,18 +51,28 @@ def get_letter_grade(average):
         return "F"
 
 
-def format_report(name, average, grade):
-    """Build a one-line report for a student."""
-    return f"{name}: {average:.1f} ({grade})"
+def format_report(name, scores, average, grade):
+    """Build a detailed table row: scores, low, high, average and grade."""
+    score_list = ", ".join(f"{score:g}" for score in scores)
+    return (
+        f"{name:<8} {score_list:<22} {min(scores):>5g} {max(scores):>5g} "
+        f"{average:>8.1f} {grade:>6}"
+    )
 
 
 def main():
-    print("Grade Report")
-    print("------------")
+    header = (
+        f"{'Name':<8} {'Scores':<22} {'Low':>5} {'High':>5} "
+        f"{'Average':>8} {'Grade':>6}"
+    )
+    print(header)
+    print("-" * len(header))
     for name, scores in STUDENTS.items():
         average = calculate_weighted_average(scores, WEIGHTS)
         grade = get_letter_grade(int(average))
-        print(format_report(name, average, grade))
+        print(format_report(name, scores, average, grade))
+    print("-" * len(header))
+    print(f"Students: {len(STUDENTS)}")
 
 
 if __name__ == "__main__":
