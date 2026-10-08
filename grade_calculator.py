@@ -14,10 +14,27 @@ STUDENTS = {
     "Evan": [80, 79.8, 80, 80],
 }
 
+# Registrar policy: the final exam counts the most.
+WEIGHTS = {
+    "homework": 0.20,
+    "quiz": 0.20,
+    "midterm": 0.25,
+    "final": 0.35,
+}
+
 
 def calculate_average(scores):
     """Return the arithmetic mean of a list of scores."""
     return sum(scores) / len(scores)
+
+
+def calculate_weighted_average(scores, weights):
+    """Return the weighted average of scores using the category weights."""
+    if len(scores) != len(weights):
+        raise ValueError("expected one score per weighted category")
+    if abs(sum(weights.values()) - 1.0) > 1e-9:
+        raise ValueError("weights must sum to 1.0")
+    return sum(score * weight for score, weight in zip(scores, weights.values()))
 
 
 def get_letter_grade(average):
@@ -43,7 +60,7 @@ def main():
     print("Grade Report")
     print("------------")
     for name, scores in STUDENTS.items():
-        average = calculate_average(scores)
+        average = calculate_weighted_average(scores, WEIGHTS)
         grade = get_letter_grade(int(average))
         print(format_report(name, average, grade))
 
