@@ -37,22 +37,15 @@ def calculate_weighted_average(scores, weights):
     return sum(score * weight for score, weight in zip(scores, weights.values()))
 
 
-def validate_scores(scores):
-    """Reject any score outside the valid percentage range."""
-    for score in scores:
-        if not 0 <= score < 100:
-            raise ValueError(f"invalid score: {score}")
-
-
 def get_letter_grade(average):
-    """Map a numeric average to a letter grade (strict scale)."""
-    if average >= 93:
+    """Map a numeric average to a letter grade."""
+    if average >= 90:
         return "A"
-    elif average >= 85:
+    elif average >= 80:
         return "B"
-    elif average >= 77:
-        return "C"
     elif average >= 70:
+        return "C"
+    elif average >= 60:
         return "D"
     else:
         return "F"
@@ -75,7 +68,6 @@ def main():
     print(header)
     print("-" * len(header))
     for name, scores in STUDENTS.items():
-        validate_scores(scores)
         average = calculate_weighted_average(scores, WEIGHTS)
         grade = get_letter_grade(round(average, 1))
         print(format_report(name, scores, average, grade))
