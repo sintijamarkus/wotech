@@ -85,8 +85,9 @@ form.addEventListener("submit", function (event) {
 });
 
 
-// READY SET GO
+// Titulbilde + START, tad READY SET GO
 const intro = document.getElementById("intro");
+const titleImage = document.getElementById("title-image");
 const countdown = document.getElementById("countdown");
 const start = document.getElementById("start");
 
@@ -105,17 +106,18 @@ function showNextWord() {
         wordIndex++;
         setTimeout(showNextWord, 1000);
     } else {
-        countdown.classList.add("hidden");
-        start.classList.remove("hidden");
+        // animācija beigusies → rādām quiz
+        intro.classList.add("hidden");
+        form.classList.remove("hidden");
+
+        showQuestion();
     }
 }
 
 start.addEventListener("click", function () {
-    intro.classList.add("hidden");
-    form.classList.remove("hidden");
+    titleImage.classList.add("hidden");
+    start.classList.add("hidden");
+    countdown.classList.remove("hidden");
 
-    showQuestion();
+    showNextWord();
 });
-
-
-showNextWord();
