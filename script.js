@@ -85,4 +85,37 @@ form.addEventListener("submit", function (event) {
 });
 
 
-showQuestion();
+// READY SET GO
+const intro = document.getElementById("intro");
+const countdown = document.getElementById("countdown");
+const start = document.getElementById("start");
+
+const words = ["READY", "SET", "GO!"];
+let wordIndex = 0;
+
+function showNextWord() {
+    if (wordIndex < words.length) {
+        countdown.textContent = words[wordIndex];
+
+        // restartējam animāciju katram vārdam
+        countdown.classList.remove("pop");
+        void countdown.offsetWidth;
+        countdown.classList.add("pop");
+
+        wordIndex++;
+        setTimeout(showNextWord, 1000);
+    } else {
+        countdown.classList.add("hidden");
+        start.classList.remove("hidden");
+    }
+}
+
+start.addEventListener("click", function () {
+    intro.classList.add("hidden");
+    form.classList.remove("hidden");
+
+    showQuestion();
+});
+
+
+showNextWord();
