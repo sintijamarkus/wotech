@@ -1,0 +1,121 @@
+@import url('https://fonts.googleapis.com/css2?family=Archivo+Black&family=Rajdhani:wght@600;700&display=swap');
+
+:root {
+    --pink: #ff2bd6;
+    --purple: #c233ff;
+    --blue: #238cff;
+    --cyan: #00eaff;
+    --orange: #ff9633;
+    --dark: #090b2a;
+}
+
+body{
+    font-family: "Comic Sans MS", cursive, sans-serif;
+    background: 
+    radial-gradient(circle at 20% 30%, #2196F3, #8B3A8B 30%, transparent 60%
+    ),
+    radial-gradient(circle at 80% 70%, #2196F3, #8B3A8B 30%, transparent 60%
+    ),
+    #0A0E27;
+    min-height: 100vh;
+}
+
+.quiz-container {
+    margin: 50px auto;
+    width: 80%;
+}
+
+.quiz-box {
+    border: 2px solid var(--purple);
+    border-radius: 15px;
+    padding: 30px;
+    transform: skew(-10deg);
+    box-shadow: 0 0 30px var(--pink);
+}
+
+.question {
+    font-family: "Rajdhani", sans-serif;
+    font-weight: 700;
+    font-size: 32px;
+    text-align: center;
+    margin-bottom: 30px;
+    color: white;
+}
+
+.options-list {
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: center;
+    gap: 20px;
+}
+
+button,
+.options-list label {
+    font-family: "Rajdhani", sans-serif;
+    font-weight: 600;
+    font-size: 20px;
+    background: rgba(9, 11, 42, 0.6);
+    border: 2px solid var(--cyan);
+    color: white;
+    padding: 20px;
+    backdrop-filter: blur(10px);
+    transform: skew(-10deg);
+    width: 45%;
+    box-shadow: 0 0 10px var(--cyan);
+}
+
+/* label izskatās tieši kā poga */
+.options-list label {
+    box-sizing: border-box;
+    text-align: center;
+    cursor: pointer;
+}
+
+/* paslēpjam pašu radio aplīti */
+.options-list input[type="radio"] {
+    display: none;
+}
+
+button:hover,
+.options-list label:hover {
+  background: rgba(33, 150, 243, 0.5);
+  box-shadow: 0 0 20px #2196F3;
+  transition: 0.3s;
+}
+
+.submit-button {
+    display: grid;
+    place-items: center;
+    padding: 40px;
+}
+
+h1 {
+    text-align: center;
+}
+
+h1 img {
+    width: 70%;
+    max-width: 800px;
+}
+
+.hidden {
+    display:none;
+}
+
+.result-image {
+    display: block;
+    width: 60%;
+    max-width: 80%;
+    margin: 0 auto;
+
+    border: 2px solid var(--pink);
+    border-radius: 15px;
+
+    box-shadow:
+        0 0 10px var(--pink),
+        0 0 25px var(--purple);
+}
+
+.hidden {
+    display: none !important;
+}
