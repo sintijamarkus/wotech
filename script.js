@@ -87,6 +87,7 @@ form.addEventListener("submit", function (event) {
 
 // Titulbilde + START, tad READY SET GO
 const intro = document.getElementById("intro");
+const header = document.getElementById("header");
 const titleImage = document.getElementById("title-image");
 const countdown = document.getElementById("countdown");
 const start = document.getElementById("start");
@@ -108,6 +109,7 @@ function showNextWord() {
     } else {
         // animācija beigusies → rādām quiz
         intro.classList.add("hidden");
+        header.classList.remove("hidden");
         form.classList.remove("hidden");
 
         showQuestion();
