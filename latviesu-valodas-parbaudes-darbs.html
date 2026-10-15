@@ -1,0 +1,464 @@
+<title>Latviešu valodas pārbaudes darbs</title>
+<meta name="claude:viewport-fit-sides" content="cover">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Alegreya:ital,wght@0,500;0,700;0,800;1,500&family=Alegreya+Sans:wght@400;500;700&family=Alegreya+Sans+SC:wght@500;700&display=swap">
+<style>
+/* Layout: one narrow column like a printed exam sheet, framed by the flag's 2:1:2 stripe and a woven-belt band */
+:root {
+  --carmine: #9e3039;
+  --carmine-ink: #7d242c;
+  --paper: #fbf8f6;
+  --sheet: #ffffff;
+  --ink: #241a1b;
+  --muted: #6b5a5c;
+  --line: #e4d8d8;
+  --tint: #f5e9ea;
+  --ok: #2d6a3a;
+  --ok-bg: #e6f1e8;
+  --bad: #a3361f;
+  --bad-bg: #f8e6e1;
+  --on-carmine: #ffffff;
+  --display: "Alegreya", Georgia, "Times New Roman", serif;
+  --body: "Alegreya Sans", "Segoe UI", system-ui, sans-serif;
+  --label: "Alegreya Sans SC", "Alegreya Sans", system-ui, sans-serif;
+}
+@media (prefers-color-scheme: dark) {
+  :root:not([data-theme="light"]) {
+    --carmine: #d4596a; --carmine-ink: #e98b97; --paper: #171112; --sheet: #211819;
+    --ink: #f2e9ea; --muted: #b8a6a8; --line: #3d2d2f; --tint: #2e1f21;
+    --ok: #7fc48c; --ok-bg: #1d2e21; --bad: #f08a72; --bad-bg: #36201b; --on-carmine: #1a0f10;
+    color-scheme: dark;
+  }
+}
+:root[data-theme="dark"] {
+  --carmine: #d4596a; --carmine-ink: #e98b97; --paper: #171112; --sheet: #211819;
+  --ink: #f2e9ea; --muted: #b8a6a8; --line: #3d2d2f; --tint: #2e1f21;
+  --ok: #7fc48c; --ok-bg: #1d2e21; --bad: #f08a72; --bad-bg: #36201b; --on-carmine: #1a0f10;
+  color-scheme: dark;
+}
+
+body { background: var(--paper); color: var(--ink); font-family: var(--body); font-size: 1.0625rem; line-height: 1.55; }
+
+.flag { display: grid; grid-template-rows: 2fr 1fr 2fr; height: 22px; }
+.flag span:nth-child(odd) { background: var(--carmine); }
+.flag span:nth-child(2) { background: var(--sheet); }
+
+.josta {
+  height: 16px;
+  border-block: 2px solid var(--carmine);
+  background:
+    repeating-linear-gradient(45deg, var(--carmine) 0 2px, transparent 2px 9px),
+    repeating-linear-gradient(-45deg, var(--carmine) 0 2px, transparent 2px 9px),
+    var(--paper);
+  opacity: .9;
+}
+
+.wrap {
+  max-width: 46rem; margin: 0 auto;
+  padding-left: max(16px, env(safe-area-inset-left, 0px));
+  padding-right: max(16px, env(safe-area-inset-right, 0px));
+}
+
+header.hero { padding-block: 2.5rem 2rem; display: grid; grid-template-columns: auto 1fr; gap: 1.25rem 1.5rem; align-items: center; }
+.auseklis { width: 84px; height: 84px; color: var(--carmine); }
+.eyebrow { font-family: var(--label); font-weight: 700; letter-spacing: .08em; color: var(--carmine); font-size: .95rem; margin: 0; }
+h1 { font-family: var(--display); font-weight: 800; font-size: clamp(2rem, 6vw, 2.9rem); line-height: 1.05; margin: .2rem 0 0; text-wrap: balance; }
+.motto { grid-column: 1 / -1; font-family: var(--display); font-style: italic; font-size: 1.2rem; color: var(--muted); margin: 0; }
+.motto b { color: var(--carmine-ink); font-weight: 500; }
+
+.meta { display: grid; grid-template-columns: repeat(auto-fit, minmax(13rem, 1fr)); gap: 1rem; padding-block: 1.5rem; }
+.field { display: grid; gap: .35rem; min-width: 0; }
+.field label { font-family: var(--label); font-weight: 700; letter-spacing: .06em; font-size: .9rem; color: var(--muted); }
+.field input, .field select {
+  font: inherit; color: var(--ink); background: var(--sheet);
+  border: 1.5px solid var(--line); border-radius: 4px; padding: .6rem .75rem; min-width: 0;
+}
+.field input:focus-visible, .field select:focus-visible { outline: 2px solid var(--carmine); outline-offset: 1px; border-color: var(--carmine); }
+
+.rules { background: var(--tint); padding: 1rem 1.25rem; border-radius: 4px; display: flex; flex-wrap: wrap; gap: .5rem 1.75rem; font-size: .98rem; }
+.rules span b { font-family: var(--display); color: var(--carmine-ink); }
+
+ol.questions { list-style: none; padding: 0; margin: 2rem 0 0; display: grid; gap: 1.25rem; }
+.q { background: var(--sheet); border: 1px solid var(--line); border-radius: 4px; padding: 1.25rem 1.25rem 1.1rem; display: grid; gap: .85rem; }
+.q-head { display: grid; grid-template-columns: auto 1fr; gap: .9rem; align-items: start; }
+.q-num { font-family: var(--display); font-weight: 800; font-size: 2rem; line-height: 1; color: var(--carmine); min-width: 2.2rem; font-variant-numeric: tabular-nums; }
+.q-body { min-width: 0; display: grid; gap: .3rem; }
+.q-topic { font-family: var(--label); font-weight: 700; letter-spacing: .07em; font-size: .82rem; color: var(--muted); }
+.q-text { margin: 0; font-weight: 500; }
+.q-text q { font-family: var(--display); font-style: italic; quotes: "«" "»"; }
+.q-sentence { margin: .15rem 0 0; font-family: var(--display); font-style: italic; font-size: 1.12rem; color: var(--carmine-ink); }
+
+.opts { display: grid; gap: .45rem; margin: 0; padding: 0; border: 0; min-width: 0; }
+.opt { display: grid; grid-template-columns: auto auto 1fr; gap: .65rem; align-items: center; padding: .55rem .75rem; border: 1.5px solid var(--line); border-radius: 4px; cursor: pointer; transition: border-color .15s, background .15s; }
+.opt:hover { border-color: var(--carmine); }
+.opt input { accent-color: var(--carmine); width: 1.05rem; height: 1.05rem; margin: 0; }
+.opt input:focus-visible { outline: 2px solid var(--carmine); outline-offset: 2px; }
+.opt .letter { font-family: var(--label); font-weight: 700; color: var(--muted); }
+.opt .t { min-width: 0; }
+.opt:has(input:checked) { border-color: var(--carmine); background: var(--tint); }
+
+.checked .opt { cursor: default; }
+.checked .opt:hover { border-color: var(--line); }
+.opt.is-right { border-color: var(--ok); background: var(--ok-bg); }
+.opt.is-wrong { border-color: var(--bad); background: var(--bad-bg); }
+.verdict { font-family: var(--label); font-weight: 700; letter-spacing: .05em; font-size: .9rem; }
+.verdict.ok { color: var(--ok); }
+.verdict.bad { color: var(--bad); }
+.explain { margin: 0; font-size: .98rem; color: var(--muted); border-top: 1px dashed var(--line); padding-top: .7rem; }
+.explain b { color: var(--ink); }
+
+.actions { display: flex; flex-wrap: wrap; gap: .75rem 1rem; align-items: center; padding-block: 2rem 1rem; }
+button { font: inherit; font-weight: 700; border-radius: 4px; padding: .75rem 1.4rem; cursor: pointer; border: 2px solid var(--carmine); }
+button:focus-visible { outline: 3px solid var(--carmine); outline-offset: 2px; }
+.btn-main { background: var(--carmine); color: var(--on-carmine); }
+.btn-main:hover { background: var(--carmine-ink); border-color: var(--carmine-ink); }
+.btn-ghost { background: transparent; color: var(--carmine-ink); }
+.note { color: var(--muted); font-size: .95rem; margin: 0; }
+.note.warn { color: var(--bad); }
+
+.result { margin-top: 1.5rem; background: var(--sheet); border: 2px solid var(--carmine); border-radius: 4px; overflow: hidden; }
+.result-top { background: var(--carmine); color: var(--on-carmine); padding: .7rem 1.25rem; font-family: var(--label); font-weight: 700; letter-spacing: .08em; }
+.result-body { padding: 1.25rem; display: grid; grid-template-columns: repeat(auto-fit, minmax(9rem, 1fr)); gap: 1rem; }
+.stat { display: grid; gap: .1rem; min-width: 0; }
+.stat .k { font-family: var(--label); font-weight: 700; letter-spacing: .06em; font-size: .85rem; color: var(--muted); }
+.stat .v { font-family: var(--display); font-weight: 800; font-size: 2.2rem; line-height: 1.1; color: var(--carmine-ink); font-variant-numeric: tabular-nums; }
+.stat .v small { font-size: 1rem; color: var(--muted); font-weight: 500; }
+.result-msg { grid-column: 1 / -1; margin: 0; font-family: var(--display); font-style: italic; font-size: 1.15rem; }
+.scale { grid-column: 1 / -1; margin: 0; font-size: .88rem; color: var(--muted); }
+
+footer { padding-block: 2.5rem 3rem; text-align: center; display: grid; gap: .4rem; justify-items: center; }
+footer .auseklis { width: 34px; height: 34px; }
+footer .blessing { font-family: var(--display); font-weight: 700; font-size: 1.35rem; margin: 0; color: var(--carmine-ink); }
+footer .quote { margin: 0; color: var(--muted); font-style: italic; font-family: var(--display); }
+
+@media (max-width: 480px) {
+  header.hero { grid-template-columns: 1fr; padding-block: 1.75rem 1.5rem; }
+  .auseklis { width: 60px; height: 60px; }
+  .q { padding: 1rem .9rem; }
+  .q-num { font-size: 1.6rem; min-width: 1.8rem; }
+}
+@media (prefers-reduced-motion: reduce) { * { transition: none !important; scroll-behavior: auto !important; } }
+</style>
+
+<div class="flag" aria-hidden="true"><span></span><span></span><span></span></div>
+
+<div class="wrap">
+  <header class="hero">
+    <svg class="auseklis" viewBox="0 0 100 100" aria-hidden="true">
+      <polygon points="50,10 78.28,78.28 10,50 78.28,21.72 50,90 21.72,21.72 90,50 21.72,78.28" fill="none" stroke="currentColor" stroke-width="4.5" stroke-linejoin="miter"/>
+      <circle cx="50" cy="50" r="5" fill="currentColor"/>
+    </svg>
+    <div>
+      <p class="eyebrow">Gramatika · 10.–11. klase</p>
+      <h1>Latviešu valodas pārbaudes darbs</h1>
+    </div>
+    <p class="motto">Sargāsim savu valodu katrā vārdā, katrā locījumā un katrā komatā. <b>Tā ir mūsu zeme, kurā dzīvo doma.</b></p>
+  </header>
+</div>
+
+<div class="josta" aria-hidden="true"></div>
+
+<main class="wrap">
+  <form id="quiz" novalidate>
+    <div class="meta">
+      <div class="field">
+        <label for="student">Vārds, uzvārds</label>
+        <input id="student" name="student" type="text" autocomplete="name" placeholder="Piemēram, Anna Bērziņa">
+      </div>
+      <div class="field">
+        <label for="klase">Klase</label>
+        <select id="klase" name="klase">
+          <option value="10.">10. klase</option>
+          <option value="11.">11. klase</option>
+        </select>
+      </div>
+    </div>
+
+    <div class="rules">
+      <span><b>15</b> jautājumi</span>
+      <span>Katram ir <b>1</b> pareiza atbilde</span>
+      <span>Pareiza atbilde: <b>1</b> punkts</span>
+      <span>Ieteicamais laiks: <b>25</b> min</span>
+    </div>
+
+    <ol class="questions" id="questions"></ol>
+
+    <div class="actions">
+      <button type="submit" class="btn-main" id="submitBtn">Iesniegt darbu</button>
+      <button type="button" class="btn-ghost" id="resetBtn">Sākt no jauna</button>
+      <p class="note" id="note" aria-live="polite">Atbildes saglabājas šajā pārlūkā, līdz darbs ir iesniegts.</p>
+    </div>
+  </form>
+
+  <section class="result" id="result" hidden aria-live="polite">
+    <div class="result-top" id="resultTitle">Rezultāts</div>
+    <div class="result-body">
+      <div class="stat"><span class="k">Punkti</span><span class="v" id="rPoints">0 <small>/ 15</small></span></div>
+      <div class="stat"><span class="k">Izpilde</span><span class="v" id="rPct">0%</span></div>
+      <div class="stat"><span class="k">Vērtējums</span><span class="v" id="rGrade">1 <small>balle</small></span></div>
+      <p class="result-msg" id="rMsg"></p>
+      <p class="scale">Vērtējums 10 ballu skalā ir orientējošs: 10 = 95–100%, 9 = 87–94%, 8 = 77–86%, 7 = 68–76%, 6 = 58–67%, 5 = 49–57%, 4 = 40–48%, 3 = 30–39%, 2 = 15–29%, 1 = zem 15%. Skolotājs to var precizēt.</p>
+    </div>
+  </section>
+</main>
+
+<div class="josta" aria-hidden="true"></div>
+<footer class="wrap">
+  <svg class="auseklis" viewBox="0 0 100 100" aria-hidden="true" style="color: var(--carmine)">
+    <polygon points="50,10 78.28,78.28 10,50 78.28,21.72 50,90 21.72,21.72 90,50 21.72,78.28" fill="none" stroke="currentColor" stroke-width="6" stroke-linejoin="miter"/>
+  </svg>
+  <p class="blessing">Dievs, svētī Latviju!</p>
+  <p class="quote">«Pastāvēs, kas pārvērtīsies.» Rainis</p>
+</footer>
+<div class="flag" aria-hidden="true"><span></span><span></span><span></span></div>
+
+<script>
+const QUESTIONS = [
+  { topic: "Interpunkcija · divdabja teiciens",
+    text: "Kurā teikumā pieturzīmes lietotas pareizi?",
+    options: ["Pārnācis mājās tēvs apsēdās pie galda.", "Pārnācis mājās, tēvs apsēdās pie galda.", "Pārnācis, mājās tēvs apsēdās pie galda.", "Pārnācis mājās tēvs, apsēdās pie galda."],
+    answer: 1,
+    explain: "Divdabja teicienu ar divdabi uz <b>-is, -usi, -ies, -usies</b> atdala ar komatu: <i>Pārnācis mājās,</i> tēvs apsēdās." },
+  { topic: "Morfoloģija · locījumi",
+    text: "Kurā locījumā ir lietvārds <q>Latvijai</q>?",
+    sentence: "Dziedāsim dziesmu Latvijai!",
+    options: ["Nominatīvā", "Ģenitīvā", "Datīvā", "Lokatīvā"],
+    answer: 2,
+    explain: "Vārds atbild uz jautājumu <b>kam?</b> (dziesmu kam? Latvijai), tātad tas ir <b>datīvs</b>." },
+  { topic: "Morfoloģija · vārdšķiras",
+    text: "Kurai vārdšķirai pieder vārds <q>lepni</q>?",
+    sentence: "Sarkanbaltsarkanais karogs lepni plīvo vējā.",
+    options: ["Apstākļa vārds", "Īpašības vārds", "Darbības vārds", "Partikula"],
+    answer: 0,
+    explain: "<i>Lepni</i> raksturo darbību (plīvo <b>kā?</b> lepni), tāpēc tas ir <b>apstākļa vārds</b>." },
+  { topic: "Morfoloģija · divdabji",
+    text: "Kurš no šiem ir darāmās kārtas pagātnes divdabis?",
+    options: ["rakstošs", "rakstāms", "uzrakstīts", "uzrakstījis"],
+    answer: 3,
+    explain: "<b>-is, -usi</b>: darāmās kārtas pagātnes divdabis (uzrakstījis). <b>-ts, -ta</b>: ciešamās kārtas pagātnes. <b>-ošs</b>: darāmās kārtas tagadnes. <b>-ams, -āms</b>: ciešamās kārtas tagadnes." },
+  { topic: "Morfoloģija · deklinācijas",
+    text: "Kurš lietvārds pieder 6. deklinācijai?",
+    options: ["mežs", "Daugava", "pils", "tirgus"],
+    answer: 2,
+    explain: "6. deklinācijā ir sieviešu dzimtes lietvārdi ar galotni <b>-s</b> (pils, sirds, nakts). <i>Mežs</i> ir 1., <i>tirgus</i> 3., <i>Daugava</i> 4. deklinācijā." },
+  { topic: "Morfoloģija · izteiksmes",
+    text: "Kura ir darbības vārda <q>dzīvot</q> pavēles izteiksmes forma 2. personā daudzskaitlī?",
+    options: ["dzīvojat", "dzīvosiet", "dzīvotu", "dzīvojiet"],
+    answer: 3,
+    explain: "Pavēles izteiksmes 2. personas daudzskaitlī ir izskaņa <b>-iet</b>: dzīvojiet! <i>Dzīvojat</i> ir īstenības izteiksmes tagadne, <i>dzīvosiet</i> nākotne, <i>dzīvotu</i> vēlējuma izteiksme." },
+  { topic: "Morfoloģija · izteiksmes",
+    text: "Kurā izteiksmē lietoti darbības vārdi šajā teikumā?",
+    sentence: "Ja es būtu putns, es lidotu pār Latvijas laukiem.",
+    options: ["Īstenības izteiksmē", "Vēlējuma izteiksmē", "Vajadzības izteiksmē", "Atstāstījuma izteiksmē"],
+    answer: 1,
+    explain: "Formas ar izskaņu <b>-tu</b> (būtu, lidotu) ir <b>vēlējuma izteiksme</b>. Tā izsaka iedomātu vai vēlamu darbību." },
+  { topic: "Morfoloģija · izteiksmes",
+    text: "Kurā izteiksmē ir darbības vārds <q>esot stāvējusi</q>?",
+    sentence: "Vecmāmiņa stāstīja, ka senāk šajā kalnā esot stāvējusi pils.",
+    options: ["Īstenības izteiksmē", "Pavēles izteiksmē", "Vajadzības izteiksmē", "Atstāstījuma izteiksmē"],
+    answer: 3,
+    explain: "Formas ar izskaņu <b>-ot</b> (esot, stāvot) ir <b>atstāstījuma izteiksme</b>. Ar to nodod citu cilvēku teikto." },
+  { topic: "Morfoloģija · vajadzības izteiksme",
+    text: "Kurā teikumā vajadzības izteiksme lietota pareizi?",
+    options: ["Mēs jāsargā sava valoda.", "Mums jāsargā savu valodu.", "Mums jāsargā sava valoda.", "Mums jāsargā savai valodai."],
+    answer: 2,
+    explain: "Vajadzības izteiksmē darītājs ir <b>datīvā</b> (mums), bet darbības objekts <b>nominatīvā</b> (sava valoda). Akuzatīvs <i>savu valodu</i> ir bieža kļūda." },
+  { topic: "Morfoloģija · līdzskaņu mija",
+    text: "Kura ir lietvārda <q>lācis</q> vienskaitļa ģenitīva forma?",
+    options: ["lāča", "lāca", "lāču", "lācim"],
+    answer: 0,
+    explain: "2. deklinācijas vārdiem vienskaitļa ģenitīvā notiek līdzskaņu mija <b>c → č</b>: lācis, lāča. <i>Lāču</i> ir daudzskaitļa ģenitīvs, <i>lācim</i> datīvs." },
+  { topic: "Morfoloģija · līdzskaņu mija",
+    text: "Kura ir lietvārda <q>egle</q> daudzskaitļa ģenitīva forma?",
+    options: ["eglu", "egļu", "egles", "eglēm"],
+    answer: 1,
+    explain: "5. deklinācijas vārdiem daudzskaitļa ģenitīvā parasti notiek līdzskaņu mija: <b>gl → gļ</b>, tāpēc egle, egļu (kā priede, priežu; zīle, zīļu)." },
+  { topic: "Interpunkcija · vienlīdzīgi locekļi",
+    text: "Kurā teikumā komati lietoti pareizi?",
+    options: ["Latvijā aug ozoli, liepas un bērzi.", "Latvijā aug ozoli liepas, un bērzi.", "Latvijā aug ozoli, liepas, un bērzi.", "Latvijā aug, ozoli, liepas un bērzi."],
+    answer: 0,
+    explain: "Vienlīdzīgus teikuma locekļus bez saikļa atdala ar komatu. Pirms <b>vienreizēja saikļa <i>un</i></b> komatu neliek." },
+  { topic: "Sintakse · salikts teikums",
+    text: "Kurš ir saliktais pakārtojuma teikums?",
+    options: ["Saule spīd, un putni dzied.", "Pār Daugavu pūš rudens vējš.", "Zvani skan, ļaudis pulcējas laukumā.", "Es zinu, ka Latvija ir mana dzimtene."],
+    answer: 3,
+    explain: "Palīgteikums <i>ka Latvija ir mana dzimtene</i> ir pakārtots virsteikumam ar saikli <b>ka</b>. Pirmais teikums ir sakārtojuma, otrais vienkāršs, trešais bezsaikļa." },
+  { topic: "Interpunkcija · uzruna",
+    text: "Kurā teikumā uzruna atdalīta pareizi?",
+    options: ["Latvija tu esi mūsu mājas!", "Latvija tu, esi mūsu mājas!", "Latvija, tu esi mūsu mājas!", "Latvija, tu, esi mūsu mājas!"],
+    answer: 2,
+    explain: "<b>Uzrunu</b> atdala ar komatu: <i>Latvija,</i> tu esi mūsu mājas! Vietniekvārds <i>tu</i> ir teikuma priekšmets, to neatdala." },
+  { topic: "Ortogrāfija · salikteņi",
+    text: "Kā pareizi rakstāms Latvijas karoga krāsu apzīmējums?",
+    options: ["sarkan-balt-sarkanais karogs", "sarkanbalt sarkanais karogs", "sarkanbaltsarkanais karogs", "sarkan baltsarkanais karogs"],
+    answer: 2,
+    explain: "Salikti īpašības vārdi, kas nosauc krāsu salikumu, rakstāmi <b>kopā</b>: sarkanbaltsarkanais." }
+];
+
+const LETTERS = ["A", "B", "C", "D"];
+const STORE_KEY = "lv-gramatika-darbs-v1";
+const MESSAGES = [
+  [95, "Izcili! Tava valoda ir tikpat stipra kā Rīgas Doma zvans."],
+  [77, "Ļoti labi! Vēl mazliet, un būsi valodas sargs pilnā mērā."],
+  [58, "Labi. Pārskati paskaidrojumus, un nākamreiz būs vēl labāk."],
+  [40, "Pietiekami, taču gramatikai vajag vairāk uzmanības. Pastāvēs, kas pārvērtīsies!"],
+  [0,  "Nepadodies! Izlasi paskaidrojumus pie katra jautājuma un mēģini vēlreiz."]
+];
+const GRADES = [[95, 10], [87, 9], [77, 8], [68, 7], [58, 6], [49, 5], [40, 4], [30, 3], [15, 2], [0, 1]];
+
+const list = document.getElementById("questions");
+const form = document.getElementById("quiz");
+const note = document.getElementById("note");
+const submitBtn = document.getElementById("submitBtn");
+let confirmEmpty = false;
+let checked = false;
+
+QUESTIONS.forEach((q, i) => {
+  const li = document.createElement("li");
+  li.className = "q";
+  li.id = "q" + (i + 1);
+  li.innerHTML = `
+    <div class="q-head">
+      <span class="q-num">${i + 1}.</span>
+      <div class="q-body">
+        <span class="q-topic">${q.topic}</span>
+        <p class="q-text">${q.text}</p>
+        ${q.sentence ? `<p class="q-sentence">${q.sentence}</p>` : ""}
+      </div>
+    </div>
+    <fieldset class="opts">
+      <legend hidden>${i + 1}. jautājums</legend>
+      ${q.options.map((o, j) => `
+        <label class="opt" for="q${i}o${j}">
+          <input type="radio" id="q${i}o${j}" name="q${i}" value="${j}">
+          <span class="letter">${LETTERS[j]}</span>
+          <span class="t">${o}</span>
+        </label>`).join("")}
+    </fieldset>
+    <div class="feedback" hidden></div>`;
+  list.appendChild(li);
+});
+
+function saveDraft() {
+  if (checked) return;
+  const data = { student: form.student.value, klase: form.klase.value, a: {} };
+  QUESTIONS.forEach((_, i) => {
+    const sel = form.querySelector(`input[name="q${i}"]:checked`);
+    if (sel) data.a[i] = sel.value;
+  });
+  try { localStorage.setItem(STORE_KEY, JSON.stringify(data)); } catch (e) {}
+}
+
+function loadDraft() {
+  let data = null;
+  try { data = JSON.parse(localStorage.getItem(STORE_KEY) || "null"); } catch (e) {}
+  if (!data) return;
+  if (data.student) form.student.value = data.student;
+  if (data.klase) form.klase.value = data.klase;
+  Object.entries(data.a || {}).forEach(([i, v]) => {
+    const el = document.getElementById(`q${i}o${v}`);
+    if (el) el.checked = true;
+  });
+}
+
+function clearDraft() {
+  try { localStorage.removeItem(STORE_KEY); } catch (e) {}
+}
+
+form.addEventListener("change", () => {
+  saveDraft();
+  if (confirmEmpty) {
+    confirmEmpty = false;
+    submitBtn.textContent = "Iesniegt darbu";
+    note.className = "note";
+    note.textContent = "Atbildes saglabājas šajā pārlūkā, līdz darbs ir iesniegts.";
+  }
+});
+form.addEventListener("input", saveDraft);
+
+form.addEventListener("submit", (e) => {
+  e.preventDefault();
+  if (checked) return;
+  const unanswered = QUESTIONS.filter((_, i) => !form.querySelector(`input[name="q${i}"]:checked`)).length;
+  if (unanswered && !confirmEmpty) {
+    confirmEmpty = true;
+    note.className = "note warn";
+    note.textContent = `Neatbildēti jautājumi: ${unanswered}. Tie tiks vērtēti ar 0 punktiem.`;
+    submitBtn.textContent = "Iesniegt tik un tā";
+    return;
+  }
+  grade();
+});
+
+function grade() {
+  checked = true;
+  let points = 0;
+  QUESTIONS.forEach((q, i) => {
+    const li = document.getElementById("q" + (i + 1));
+    const sel = form.querySelector(`input[name="q${i}"]:checked`);
+    const picked = sel ? Number(sel.value) : -1;
+    const ok = picked === q.answer;
+    if (ok) points++;
+    li.classList.add("checked");
+    li.querySelectorAll("input").forEach(inp => inp.disabled = true);
+    li.querySelectorAll(".opt").forEach((lab, j) => {
+      if (j === q.answer) lab.classList.add("is-right");
+      else if (j === picked) lab.classList.add("is-wrong");
+    });
+    const fb = li.querySelector(".feedback");
+    fb.innerHTML = `
+      <span class="verdict ${ok ? "ok" : "bad"}">${ok ? "Pareizi · 1 punkts" : picked < 0 ? "Nav atbildēts · 0 punktu" : "Nepareizi · 0 punktu"}${ok ? "" : ` · pareizā atbilde: ${LETTERS[q.answer]}`}</span>
+      <p class="explain">${q.explain}</p>`;
+    fb.hidden = false;
+    fb.style.display = "grid";
+    fb.style.gap = ".5rem";
+  });
+
+  const pct = Math.round(points / QUESTIONS.length * 100);
+  const exact = points / QUESTIONS.length * 100;
+  const balle = GRADES.find(([min]) => exact >= min)[1];
+  const msg = MESSAGES.find(([min]) => exact >= min)[1];
+  const name = form.student.value.trim();
+
+  document.getElementById("resultTitle").textContent =
+    "Rezultāts" + (name ? " · " + name : "") + " · " + form.klase.value + " klase";
+  document.getElementById("rPoints").innerHTML = `${points} <small>/ ${QUESTIONS.length}</small>`;
+  document.getElementById("rPct").textContent = pct + "%";
+  document.getElementById("rGrade").innerHTML = `${balle} <small>${balle === 1 ? "balle" : "balles"}</small>`;
+  document.getElementById("rMsg").textContent = msg;
+
+  const result = document.getElementById("result");
+  result.hidden = false;
+  submitBtn.disabled = true;
+  submitBtn.style.opacity = ".5";
+  note.className = "note";
+  note.textContent = "Darbs iesniegts. Pareizās atbildes un paskaidrojumi redzami pie katra jautājuma.";
+  clearDraft();
+  result.scrollIntoView({ behavior: "smooth", block: "start" });
+}
+
+document.getElementById("resetBtn").addEventListener("click", () => {
+  checked = false;
+  confirmEmpty = false;
+  clearDraft();
+  form.reset();
+  document.querySelectorAll(".q").forEach(li => {
+    li.classList.remove("checked");
+    li.querySelectorAll("input").forEach(inp => inp.disabled = false);
+    li.querySelectorAll(".opt").forEach(l => l.classList.remove("is-right", "is-wrong"));
+    const fb = li.querySelector(".feedback");
+    fb.hidden = true;
+    fb.innerHTML = "";
+  });
+  document.getElementById("result").hidden = true;
+  submitBtn.disabled = false;
+  submitBtn.style.opacity = "";
+  submitBtn.textContent = "Iesniegt darbu";
+  note.className = "note";
+  note.textContent = "Atbildes saglabājas šajā pārlūkā, līdz darbs ir iesniegts.";
+  window.scrollTo({ top: 0, behavior: "smooth" });
+});
+
+loadDraft();
+</script>
